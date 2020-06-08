@@ -1,0 +1,44 @@
+config:
+  clientID: ${clientID}
+  clientSecret: ${clientSecret}
+
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration
+extraArgs:
+  provider: ${provider}
+  scope: "openid profile email"
+  cookie-domain: .${domain}
+  whitelist-domain: .${domain}
+  cookie-secure: "false"
+  redirect-url: https://${host}/oauth2/callback
+  # # https://oauth2-proxy.github.io/oauth2-proxy/auth-configuration#gitlab-auth-provider
+  # # restrict logins to members of any of these groups (slug), separated by a comma
+  # # for instance, "lazyorange/lab"
+  gitlab-group: ${gitlabGroup}
+  # provider: keycloak
+  # client-id: gatekeeper
+  # client-secret: 5a626bc7-35e7-4cf0-8207-cd1985eff786
+  # login-url: "https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/openid-connect/auth"
+  # redeem-url: "https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/openid-connect/token"
+  # validate-url: "https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/openid-connect/userinfo"
+  # keycloak-group: /gitlab1
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: ${ingressClass}
+    kubernetes.io/tls-acme: "true"
+  hosts:
+  - ${host}
+  tls:
+  # Secrets must be manually created in the namespace.
+  - secretName: oauth2-proxy-tls
+    hosts:
+    - ${host}
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 300Mi

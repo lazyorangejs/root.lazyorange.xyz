@@ -1,0 +1,13 @@
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+# https://github.com/kubernetes-sigs/metrics-server/issues/300
+# https://github.com/kubernetes-sigs/metrics-server/issues/247#issuecomment-510803215
+args:
+- --kubelet-insecure-tls=true
+- --kubelet-preferred-address-types=InternalIP

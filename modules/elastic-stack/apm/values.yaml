@@ -1,0 +1,5 @@
+ingress:
+  tls:
+  - hosts:
+    - ${host}
+    secretName: elastic-apm-server-tls

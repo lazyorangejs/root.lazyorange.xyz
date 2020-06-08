@@ -1,0 +1,11 @@
+###############
+# Ingress Stack
+###############
+cluster:
+  stacks:
+    logging:
+      enabled: yes
+      elastic_stack:
+        enabled: yes
+      apm:
+        enabled: yes

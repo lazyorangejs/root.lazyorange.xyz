@@ -1,0 +1,19 @@
+# create customer by using HttPie:
+# $ kubectl port-forward deploy/kong-kong 8001:8001 -n ingress-kong
+# $ http -v :8001/consumers/ username=elastic
+# $ http -v :8001/consumers/elastic/basic-auth username=apm password=password
+# $ http -v :8001/consumers/elastic/basic-auth username=kibana password=password
+# $
+resources:
+- apiVersion: configuration.konghq.com/v1
+  kind: KongClusterPlugin
+  metadata:
+    name: apm-basic-auth
+  plugin: basic-auth
+  config: {}
+- apiVersion: configuration.konghq.com/v1
+  kind: KongClusterPlugin
+  metadata:
+    name: kinana-basic-auth
+  plugin: basic-auth
+  config: {}

@@ -1,0 +1,19 @@
+build-aws-ami:
+  image: bitnami/minideb:stretch
+  stage: prepare
+  before_script:
+  - apt-get update && apt-get install -qy wget unzip curl git procps
+  - ./scripts/install_packer.sh
+  - packer validate packer.json
+  script:
+  - packer build packer.json
+  only:
+    changes:
+    - packer.json
+    variables:
+    - $AWS_ACCESS_KEY_ID
+    - $AWS_SECRET_ACCESS_KEY
+  except:
+    variables:
+    - $PACKER_DISABLED == "yes"
+  allow_failure: true

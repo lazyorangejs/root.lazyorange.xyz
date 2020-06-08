@@ -1,0 +1,12 @@
+keycloak:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: ${ingressClass}
+    hosts:
+    - ${host}
+    tls:
+    - hosts:
+      - ${host}
+      secretName: keycloak-proxy-tls

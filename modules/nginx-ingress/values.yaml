@@ -1,0 +1,15 @@
+controller:
+  podLabels:
+    app: ingress-nginx
+
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - ingress-nginx
+      topologyKey: "kubernetes.io/hostname"
+
+defaultBackend: {}

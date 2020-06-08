@@ -1,0 +1,10 @@
+# Digital Ocean access token
+doToken: ""
+
+clusterIssuer:
+  challengeProvider: http01 # digitalocean
+  
+  http01:
+    ingressClass: nginx
+
+  letsEncryptEmail: ""

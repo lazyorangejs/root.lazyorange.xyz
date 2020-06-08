@@ -1,0 +1,31 @@
+# https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/guides/getting-started.md
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+admin:
+  http:
+    # Enable plaintext HTTP listen for the admin API
+    # Disabling this and using a TLS listen only is recommended for most configuration
+    enabled: true
+    servicePort: 8001
+    containerPort: 8001
+
+  tls:
+    # Enable HTTPS listen for the admin API
+    enabled: false
+
+proxy:
+  http:
+    # Enable plaintext HTTP listen for the proxy
+    # HTTP traffic should be allowed for Cert Manager to generate certs
+    enabled: true

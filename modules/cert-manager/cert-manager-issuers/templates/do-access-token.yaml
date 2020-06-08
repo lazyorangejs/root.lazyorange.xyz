@@ -1,0 +1,10 @@
+{{- if eq .Values.clusterIssuer.challengeProvider "digitalocean" }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: digitalocean-dns
+type: Opaque
+data:
+  # insert your DO access token here
+  access-token: "{{ .Values.doToken | b64enc }}"
+{{- end }}

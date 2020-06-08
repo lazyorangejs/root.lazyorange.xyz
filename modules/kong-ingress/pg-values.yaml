@@ -1,0 +1,5 @@
+env:
+  database: "postgres"
+  pg_host: ${pg_host}
+  pg_user: ${pg_user}
+  pg_password: ${pg_password}

@@ -1,0 +1,29 @@
+cluster:
+  env: sandbox
+  enabled: yes
+  domain:
+    name: do-basic-example.lab.lazyorange.xyz
+    letsEncryptEmail: vymarkov@gmail.com
+  cloud:
+    provider: digitalocean
+  gitlab: # within this example will be created the dedicated gitlab group with random name 
+    infra_project_id: "fake_id"
+    group_id: "fake_id"
+  sso:
+    oauth2_proxy:
+      enabled: yes
+  stacks:
+    ingress:
+      enabled: yes
+      kong:
+        enabled: yes
+      cert_manager:
+        enabled: yes
+      external_dns:
+        enabled: yes
+    logging:
+      enabled: no
+      elastic_stack:
+        enabled: yes
+      apm:
+        enabled: yes

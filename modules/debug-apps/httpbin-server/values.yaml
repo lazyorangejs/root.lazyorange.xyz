@@ -1,0 +1,20 @@
+deploymentApiVersion: apps/v1
+
+ingress:
+  tls:
+    enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "kong"
+
+service:
+  url: ""
+  externalPort: 80
+  internalPort: 80
+
+image:
+  repository: docker.io/kennethreitz/httpbin
+  tag: "latest"
+
+postgresql:
+  enabled: false

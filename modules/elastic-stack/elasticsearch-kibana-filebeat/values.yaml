@@ -1,0 +1,78 @@
+# Default values for elastic-stack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# https://github.com/elastic/helm-charts/tree/master/elasticsearch
+# https://github.com/elastic/helm-charts/tree/master/elasticsearch#configuration
+elasticsearch:
+  enabled: true
+  resources:
+    requests:
+      cpu: "500m"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+  # priorityClassName: "system-node-critical"
+
+# https://github.com/elastic/helm-charts/tree/master/filebeat
+filebeat:
+  enabled: true
+  # https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html
+  filebeatConfig:
+    filebeat.yml: |-
+      filebeat.autodiscover:
+        providers:
+        - type: kubernetes
+          hints.enabled: true
+          hints.default_config.enabled: false
+          templates:
+          - condition:
+              equals:
+                kubernetes.annotations.json_logs: "true"
+            config:
+              - type: docker
+                containers.ids:
+                - "*"
+                processors:
+                - decode_json_fields:
+                    fields: ["message", "msg", "level", "pid"]
+                    target: "json_message"
+                    process_array: true
+                - add_kubernetes_metadata:
+                    in_cluster: true
+
+      processors:
+        - add_cloud_metadata: ~
+      
+      setup.template.enabled: false
+      setup.ilm.enabled: false
+
+      output.elasticsearch:
+        hosts: ['${elasticsearchHost}']
+        # pipelines:
+        # - pipeline: "app_json_k8s"
+        #   when.equals:
+        #     kubernetes.labels.tier: web
+        # - pipeline: "app_json_k8s"
+        #   when.equals:
+        #     kubernetes.annotations.co.elastic.logs/tier: web
+
+# https://github.com/elastic/helm-charts/tree/master/kibana
+# https://github.com/elastic/helm-charts/blob/master/kibana/values.yaml
+kibana:
+  enabled: true
+  resources:
+    requests:
+      cpu: "500m"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+  replicas: 3
+  ingress:
+    tls:
+    - hosts:
+      - ${host}
+      secretName: elastic-kibana-server-tls
+
+elasticsearch-curator:
+  enabled: false

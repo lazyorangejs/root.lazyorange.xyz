@@ -1,0 +1,22 @@
+###############
+# Ingress Stack
+###############
+cluster:
+  gitlab:
+    infra_project_id: ""
+    group_id: ""
+  sso:
+    oauth2_proxy: # nginx ingress controller will be created in order to use oauth2_proxy as an external auth service
+      enabled: yes
+    keycloak:
+      enabled: no
+  control_plane:
+    rancher: 
+      enabled: yes
+  stacks:
+    logging:
+      enabled: no
+      elastic_stack:
+        enabled: yes
+      apm:
+        enabled: yes

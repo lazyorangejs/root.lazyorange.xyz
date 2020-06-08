@@ -1,0 +1,126 @@
+# This template can use to set up an AWS EKS cluster for specific project and allows to you 
+# create and manage Nginx Ingress Controller, CertManager and other tools with custom values for Helm charts as you wish :)
+#
+variables:
+  CI_IMAGE_NAME: $CI_REGISTRY_IMAGE:terraform-v${TERRAFORM_VERSION}-helmfile-${HELMFILE_VERSION}-doctl-${DOCTL_VERSION}-kubectl-${KUBECTL_VER}-helm-${HELM_VER}
+  KUBECTL_VER: v1.16.0
+  HELM_VER: v3.2.1
+  HELMFILE_VERSION: v0.116.0 # https://github.com/roboll/helmfile/releases
+  DOCTL_VERSION: 1.43.0 # https://github.com/digitalocean/doctl/releases
+  TERRAFORM_VERSION: 0.12.25 # https://releases.hashicorp.com/terraform/
+  #
+  KUBEHOME_DIR: $CI_PROJECT_DIR/.kube
+  KUBECONFIG: $CI_PROJECT_DIR/.kube/config
+  # Terraform variables
+  TERRAFORM_DIR: ./terraform
+  PLAN: plan.tfplan
+  TF_VAR_kubeconfig_path: $CI_PROJECT_DIR/.kube/config
+  # Set a group id to add a kubernetes cluster to its settings
+  # ⚠️ REPLACE WITH YOUR OWN ⚠️
+  TF_VAR_root_gitlab_group: 6638212
+  TF_VAR_root_gitlab_project: $CI_PROJECT_ID
+  TF_VAR_dns_zone: $KUBE_INGRESS_BASE_DOMAIN
+image:
+  name: $CI_IMAGE_NAME
+  entrypoint:
+  - '/usr/bin/env'
+  - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+cache:
+  paths:
+  - .terraform
+
+before_script:
+- mkdir -p $KUBEHOME_DIR
+- echo $KUBECONFIG
+- terraform --version
+- terraform init $TERRAFORM_DIR
+
+stages:
+- prepare
+- lint
+- validate
+- build
+- test
+- deploy
+- gitlab
+- infra
+- testing
+- destroy
+
+validate:
+  stage: validate
+  script:
+  - terraform validate $TERRAFORM_DIR
+
+plan:
+  stage: build
+  script:
+  - terraform plan -out=$PLAN $TERRAFORM_DIR
+  artifacts:
+    name: plan
+    paths:
+      - $PLAN
+
+apply with autoapprove:
+  extends: .apply
+  allow_failure: false
+  only:
+  - schedules
+
+apply:
+  extends: .apply
+  when: manual
+  allow_failure: false
+  except:
+  - schedules
+
+# At the same time will be created EKS or DOKS only.
+.apply:
+  stage: deploy
+  environment:
+    name: production
+  script:
+  - terraform apply -input=false $PLAN
+  dependencies:
+  - plan
+
+destroy from web:
+  extends: .destroy
+  except:
+  - schedules
+  when: manual
+
+destroy with delay:
+  extends: .destroy
+  only:
+  - schedules
+  when: delayed
+  start_in: 5 minutes
+
+.auto-configure:
+  image: $CI_IMAGE_NAME
+
+.destroy:
+  stage: destroy
+  extends:
+  - .before-script
+  environment:
+    name: production
+  script:
+  - helm version -c
+  - terraform destroy -auto-approve $TERRAFORM_DIR
+
+.before-script:
+  before_script:
+  # - apt-get install -yq procps
+  - aws --version
+  - doctl version
+  - kubectl version --client
+  - helm version -c
+  - helmfile -v
+
+# in this branch `local` directive is replaced by `remote` to make possible include this .gitlab-ci.yml itself from another repo
+include:
+- project: lazyorangejs/staging.lazyorange.xyz
+  file: .gitlab/ci/templates/Jobs/Build-Docker-Image.gitlab-ci.yml

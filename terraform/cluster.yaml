@@ -1,0 +1,43 @@
+# Q: How can I set a cluster name?
+# A: You don't need to specify cluster name, Gitlab group / project name will be used as cluter name, it's preferred.
+cluster:
+  env: sandbox
+  enabled: no
+  domain:
+    name: lab.lazyorange.xyz
+    letsEncryptEmail: vymarkov@gmail.com
+  cloud:
+    provider: digitalocean
+  gitlab:
+    infra_project_id: 18549305 # https://gitlab.com/lazyorangejs/infra/lab.lazyorange.xyz
+    group_id: 7773006 # https://gitlab.com/lazyorangejs/lab
+  control_plane:
+    rancher:
+      # don't install Rancher on Digital Ocean Kubernetes, your kubernetes cluster will crash
+      enabled: yes
+  sso:
+    oauth2_proxy: # nginx ingress controller will be created in order to use oauth2_proxy as an external auth service
+      enabled: yes
+    # keycloak: # !!! NOT READY FOR USAGE !!!
+    #   enabled: no
+  stacks:
+    ###############
+    # Ingress Stack
+    ###############
+    ingress:
+      enabled: yes
+      kong:
+        enabled: yes
+      cert_manager:
+        enabled: yes
+      external_dns:
+        enabled: yes
+    ###############
+    # Logging Stack
+    ###############
+    logging:
+      enabled: no # if "yes" then will be created the dedicated node group, then Elastic Stack will be deployed to.
+      elastic_stack:
+        enabled: yes
+      apm:
+        enabled: yes

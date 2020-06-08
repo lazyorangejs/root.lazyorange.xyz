@@ -1,0 +1,32 @@
+prometheusOperator:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+prometheus:
+ resources:
+    requests:
+      memory: 400Mi
+
+grafana:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  ingress:
+    hosts:
+    - ${grafana_url}
+    tls:
+    - hosts:
+      - ${grafana_url}
+      secretName: grafana-tls
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "kong"

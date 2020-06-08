@@ -1,0 +1,32 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" Name="urn:keycloak" entityID="https://idp.lab.lazyorange.xyz/auth/realms/local">
+    <IDPSSODescriptor WantAuthnRequestsSigned="true"
+			protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+                        <KeyDescriptor use="signing">
+                          <dsig:KeyInfo>
+                            <dsig:KeyName>IsZCWCcCM0gSfABxf6V-54jOJeR_Fse7Xpt2QWK8w2M</dsig:KeyName>
+                            <dsig:X509Data>
+                              <dsig:X509Certificate>MIICmTCCAYECBgFyj4BD5zANBgkqhkiG9w0BAQsFADAQMQ4wDAYDVQQDDAVsb2NhbDAeFw0yMDA2MDcxNTU1NDdaFw0zMDA2MDcxNTU3MjdaMBAxDjAMBgNVBAMMBWxvY2FsMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmWdML6R2zok/NuN0TXckvYDigRw7WJEZyeo2Gj7wnjVCWdl7BLSPtFGER3lZxkq2371UWLNSsbPYuhQqma6Cyci1dkCSL0XxMbBn5pNKLzMhKzEK+oEBVlAvOPiIPZA9cg2W7Du/r5/eixC2V8VCxCC7tgaxra9xVKXfQNhpxNBZcGs38X5TQio/7bxOtxZ6ExpjXxU4QeZ28d5YWkirTDKxa8XFAureeGiZ89hbdH1Y8Z8I+46omDnRPcF+8zzhiYkQDxBXMloVHRQ73teczmHBvE04HpavjB2+EPLUfczQBIsrTVjT0tNGmu3wb7pUIHhwFKHH6Omof9DDl8qI/QIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBzRFluxQlAIsAv+7Jpj26VVC8ds6GT+LtehY6J2gFSn5H1epUexJVJJX9mzakuh47mXIe096m802IFTvUu7Zigv4s7b6U21HtIuGI59d5aCM6RvzxO1mlMZM4EV74k79s1ZFqANVAmvfTy/mUQFJxNLoFGL4GuVf9VsAk5LSK35P24I+EJ/jiwkyHTOL5z1CpBGQaRwa4/s2+1pkPAEcVOulaLSudePcyBQ0spxRgeGLXeypTZsIOtSo2KUj0UoFYjo6WAsrbIvIZTeiyiGMh+KxAa+pDVmla2HwMKum2Y3HFB1VCzD27woT5FyUpWLAxm1SblUPuDtMq5x4fgDJYO</dsig:X509Certificate>
+                            </dsig:X509Data>
+                          </dsig:KeyInfo>
+                        </KeyDescriptor>
+
+			<SingleLogoutService
+					Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+					Location="https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/saml" />
+			<SingleLogoutService
+					Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+					Location="https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/saml" />
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+			<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+				Location="https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/saml" />
+			<SingleSignOnService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+				Location="https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/saml" />
+			<SingleSignOnService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+				Location="https://idp.lab.lazyorange.xyz/auth/realms/local/protocol/saml" />
+		</IDPSSODescriptor>
+</EntityDescriptor>

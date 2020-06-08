@@ -1,0 +1,6 @@
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: kong
+    kubernetes.io/tls-acme: "true"
+    #
+    konghq.com/plugins: apm-basic-auth,https-redirect

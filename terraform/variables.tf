@@ -44,6 +44,9 @@ variable "sentry_dsn" {
   description = "Helm chart will be installed by providing a non empty Sentry DSN"
 }
 
+# Terraform Gitlab Provider still does not provide resource to create Gitlab Application
+# since this resource will be provided we are going to provide ability to create the gitlab application by using Terraform
+# - https://github.com/terraform-providers/terraform-provider-gitlab/issues/321
 variable "idp_creds" {
   type = object({
     clientID     = string

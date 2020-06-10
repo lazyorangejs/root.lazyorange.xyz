@@ -49,7 +49,3 @@ resource "digitalocean_kubernetes_cluster" "default" {
     ignore_changes = [node_pool[0].node_count]
   }
 }
-
-output "cluster_id" {
-  value = digitalocean_kubernetes_cluster.default.name
-}

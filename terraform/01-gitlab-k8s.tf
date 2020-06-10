@@ -9,6 +9,14 @@ module "gitlab" {
   s3_aws_secret_access_key = var.s3_aws_secret_access_key
 }
 
+module "gitlab_docker_registry" {
+  source = "../modules/auth/gitlab-docker-registry"
+  enabled = true
+
+  gitlab_group_id = module.cluster_settings.settings.gitlab_group_backend_id
+  kubernetes = local.kubernetes
+}
+
 module "gitlab_k8s_cluster" {
   source = "git::https://gitlab.com/lazyorangejs/staging.lazyorange.xyz//terraform/module/gitlab-kube-cluster?ref=tags/v0.6.0"
   stage  = "*"

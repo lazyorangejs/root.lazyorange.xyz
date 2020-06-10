@@ -14,7 +14,7 @@ terraform {
   required_version = "~> 0.12.3"
 
   required_providers {
-    gitlab       = "2.5"
+    gitlab       = "2.10"
     digitalocean = "1.18"
     scaleway     = "1.15"
   }

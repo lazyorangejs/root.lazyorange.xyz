@@ -16,7 +16,7 @@ module "cluster_settings" {
 }
 
 module "digitalocean_k8s" {
-  source = "../../terraform/cloud/doks"
+  source = "../../modules/cloud/doks"
 
   kubernetes_version = "1.16"
 

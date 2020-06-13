@@ -14,7 +14,7 @@ module "cluster_settings" {
 }
 
 module "scaleway_k8s" {
-  source = "../../terraform/cloud/scaleway"
+  source = "../../modules/cloud/scaleway"
 
   kubernetes_version = "1.16.9"
   cluster_name       = module.cluster_settings.cluster_name

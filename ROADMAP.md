@@ -9,6 +9,7 @@
 - [x] Setup Kubernetes Node Groups to deploy Elastic Stack (ElasticAPM, Elasticsearch, Filebeat)
 - [x] Setup Rancher by using [LetsEncrypt HTTP-01 challenge](https://cert-manager.io/docs/configuration/acme/http01/) as a provisioner for certificates (for public infrastucture)
 - [x] Setup [oauth2-proxy](https://github.com/oauth2-proxy/oauth2-proxy) to provide authentication for Kubernetes Ingress resources such as Grafana, Prometheus, etc by using Gitlab application
+- [x] Setup Kubernetes Docker Registry Secrets into CI/CD env variables for Gitlab's Auto Deploy Job
 
 ### v0.0.1
 - [ ] Setup Kubernetes Docker Registry Secrets for developers to play with Gitlab Docker registry

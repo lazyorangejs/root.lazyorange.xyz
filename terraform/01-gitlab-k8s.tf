@@ -10,16 +10,17 @@ module "gitlab" {
 }
 
 module "gitlab_docker_registry" {
-  source = "../modules/auth/gitlab-docker-registry"
-  enabled = true
+  source             = "../modules/auth/gitlab-docker-registry"
+  enabled            = true
+  k8s_secret_enabled = true
 
   gitlab_group_id = module.cluster_settings.settings.gitlab_group_backend_id
-  kubernetes = local.kubernetes
+  kubernetes      = local.kubernetes
 }
 
 module "gitlab_k8s_cluster" {
   source = "git::https://gitlab.com/lazyorangejs/staging.lazyorange.xyz//terraform/module/gitlab-kube-cluster?ref=tags/v0.6.0"
-  stage  = "*"
+  stage  = module.cluster_settings.gitlab_env_scope
 
   enabled                     = module.cluster_settings.cluster_enabled
   group_gitlab_runner_enabled = false

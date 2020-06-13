@@ -1,18 +1,4 @@
-variable "do_token" {
-  type    = string
-  default = ""
-}
 
-variable "gitlab_group_id" {
-  type        = string
-  description = "(Semi-optional, string) The id of the group to add the cluster to."
-  default     = ""
-}
-
-variable "root_gitlab_project" {
-  type        = string
-  description = "(Required) This variable can be populated from Gitlab CI environments"
-}
 
 data "gitlab_group" "this" {
   count = length(local.settings.gitlab_group_backend_id) > 0 ? 1 : 0
@@ -33,7 +19,7 @@ locals {
     enabled = true
 
     ingressClass = local.infraIngressClass
-    gitlabGroup = join("", data.gitlab_group.this.*.full_path)
+    gitlabGroup  = join("", data.gitlab_group.this.*.full_path)
 
     keycloak = {
       enabled = false
@@ -72,6 +58,19 @@ locals {
   cert_manager = {
     defaultIssuerName = lookup(local.cert_manager_settings, local.cluster.cloud.provider, "default")
   }
+
+  scopes = {
+    dev         = "development"
+    develop     = "development"
+    development = "development"
+    # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L62
+    staging     = "staging"
+    # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L122
+    prod        = "production"
+    production  = "production"
+  }
+
+  gitlab_env_scope = lookup(local.scopes, local.settings.env, "*")
 }
 
 output "doks_enabled" {
@@ -93,6 +92,10 @@ output "rancher_enabled" {
 output "infraIngressClass" {
   value       = "nginx"
   description = "Default ingress class used across infrastructure services, don't use for internet facing services"
+}
+
+output "gitlab_env_scope" {
+  value = local.gitlab_env_scope
 }
 
 output "settings" {

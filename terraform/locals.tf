@@ -6,25 +6,12 @@ module "cluster_settings" {
   do_token            = var.do_token
 }
 
-output cluster_settings {
-  value       = module.cluster_settings.settings
-  description = "The computed cluster settings"
-  depends_on  = [module.cluster_settings]
-}
-
-
 locals {
+  kubernetes       = var.kubernetes
   domain           = module.cluster_settings.settings.domain.name
   letsEncryptEmail = module.cluster_settings.settings.domain.letsEncryptEmail
 
   gitlab_manage_project_id = module.cluster_settings.settings.gitlab.infra_project_id
-
-  # monitoring stack
-  monitoring_stack = {
-    enabled = module.cluster_settings.cluster_enabled
-
-    prometheus_operator_enabled = false
-  }
 
   # debug services
   debug_services = {

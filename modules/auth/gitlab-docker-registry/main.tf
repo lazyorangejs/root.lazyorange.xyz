@@ -1,12 +1,3 @@
-
-provider "kubernetes" {
-  load_config_file = false
-
-  host                   = var.kubernetes.kubernetes_endpoint
-  token                  = var.kubernetes.kubernetes_token
-  cluster_ca_certificate = base64decode(var.kubernetes.kubernetes_ca_cert)
-}
-
 resource "gitlab_deploy_token" "gitlab_group_k8s_token" {
   count = var.enabled ? 1 : 0
 
@@ -37,25 +28,25 @@ resource "gitlab_deploy_token" "gitlab_group_k8s_token" {
 resource "gitlab_group_variable" "ci_deploy_user" {
   count = var.enabled ? 1 : 0
 
-   group     = var.gitlab_group_id
-   key       = "CI_DEPLOY_USER"
-   value     = var.docker_username
-   protected = true
-   masked    = false
+  group     = var.gitlab_group_id
+  key       = "CI_DEPLOY_USER"
+  value     = var.docker_username
+  protected = true
+  masked    = false
 }
 
 resource "gitlab_group_variable" "ci_deploy_password" {
   count = var.enabled ? 1 : 0
 
-   group     = var.gitlab_group_id
-   key       = "CI_DEPLOY_PASSWORD"
-   value     = gitlab_deploy_token.gitlab_group_k8s_token.0.token
-   protected = true
-   masked    = true
+  group     = var.gitlab_group_id
+  key       = "CI_DEPLOY_PASSWORD"
+  value     = gitlab_deploy_token.gitlab_group_k8s_token.0.token
+  protected = true
+  masked    = true
 }
 
 resource "kubernetes_secret" "docker_pull_secret" {
-  count = var.enabled ? 1 : 0
+  count = var.enabled && var.k8s_secret_enabled ? 1 : 0
 
   metadata {
     name      = "gitlab-registry" // due to GitLab's AutoDevOps Helm chart default settings
@@ -69,9 +60,9 @@ resource "kubernetes_secret" "docker_pull_secret" {
     })
   }
 
-  depends_on = [ gitlab_deploy_token.gitlab_group_k8s_token ]
-
   type = "kubernetes.io/dockerconfigjson"
+
+  depends_on = [gitlab_deploy_token.gitlab_group_k8s_token]
 }
 
 output "k8s_deploy_token" {

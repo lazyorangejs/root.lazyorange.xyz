@@ -17,16 +17,14 @@ In order to use for production environment you should clone this repo and rename
 
 The module supports the following:
 
-- The module creates an AWS EKS cluster and adds to [the group kubernetes clusters](https://docs.gitlab.com/ee/user/group/clusters/#overview)
-- IAM Role with specified policy for the cluster-autoscaler service account in kube-system namespace
-- Dedicated node group for Gitlab Runner with [scaling a node group to 0](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#scaling-a-node-group-to-0) configuration
-- A collection of helmfiles to setup **Gitlab Runner**, **Cluster AutoScaler**, **CertManager**, **NGINX Ingress Contoller**
-
-Other benefits:
-
-- Gitlab Runner, CertManager, and other helm charts can be enabled or disabled by environment variable
-
-**Note:** Helm chart which is used by default in Auto DevOps pipelines does not support Kubernetes 1.16+ yet
+- Setup developer-friendly environment to deploy Kubernetes from Gitlab CI and connect to Gitlab group
+- Configure a terraform state storage (DigitalOcean Spaces) for infrastructure resources
+- Deploy a Kubernetes in DigitalOcean by using DOKS (*optional, can be used any Kubernetes provider*)
+- Provision Kubernetes with addons: **Kong Ingress Contoller**, **Cert-Manager**, **ExternalDNS**
+- Setup a Kubernetes Node Group to deploy Elastic Stack (ElasticAPM, Elasticsearch, Filebeat) (supported only by DOKS)
+- Setup Rancher by using LetsEncrypt HTTP-01 challenge as a provisioner for certificates (for public infrastucture)
+- Setup oauth2-proxy to provide authentication for Kubernetes Ingress resources such as Grafana, Prometheus, etc by using Gitlab application
+- Setup Kubernetes Docker Registry Secrets into CI/CD env variables for Gitlab's Auto Deploy Job
 
 ## Cold start
 

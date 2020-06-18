@@ -63,6 +63,7 @@ locals {
     dev         = "development"
     develop     = "development"
     development = "development"
+    
     # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L62
     staging     = "staging"
     # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L122

@@ -6,7 +6,10 @@ variable "gitlab_project_id" {
 variable "extraEnv" {
   // there is key-value map, represented by encoded JSON to hack terraform
   type = object({
-    dev    = string
     global = string
+    dev    = string
+    production = object({
+      DATABASE_URL = string
+    })
   })
 }

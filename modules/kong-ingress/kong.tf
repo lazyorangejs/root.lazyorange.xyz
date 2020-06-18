@@ -22,6 +22,8 @@ resource "helm_release" "kong_crd" {
 
   atomic           = true
   create_namespace = true
+
+  namespace        = var.kubernetes.namespace
 }
 
 # https://charts.konghq.com/
@@ -41,8 +43,7 @@ resource "helm_release" "kong" {
 
   create_namespace = true
   skip_crds        = true
-
-  namespace = "ingress-kong"
+  namespace        = var.kubernetes.namespace
 
   values = [
     templatefile("${path.module}/values.yaml", {}),

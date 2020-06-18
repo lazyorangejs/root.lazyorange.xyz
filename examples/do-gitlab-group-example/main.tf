@@ -3,8 +3,8 @@
 
 locals {
   # https://gitlab.com/lazyorangejs/backend
-  gitlab_group_id         = "6638212"
-  # https://gitlab.com/lazyorangejs/infra/lab.lazyorange.xyz
+  gitlab_group_id = "6638212"
+  # https://gitlab.com/lazyorangejs/infra/dev.lazyorange.xyz
   gitlab_infra_project_id = "18549305"
 }
 

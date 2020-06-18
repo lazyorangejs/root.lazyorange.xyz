@@ -9,3 +9,15 @@ resource "gitlab_project_variable" "default" {
   key   = each.key
   value = each.value
 }
+
+resource "gitlab_project_variable" "production" {
+  project = var.gitlab_project_id
+
+  for_each = var.extraEnv.production
+
+  protected         = true
+  environment_scope = "production"
+
+  key   = each.key
+  value = each.value
+}

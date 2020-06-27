@@ -92,10 +92,6 @@ EOF
   }
 }
 
-# we will fail there due to rancher is not ready to consume API requests by using public DNS domain
-# A record for rancher is not accessible immediately after setting, so you should retry when rancher will accessible from public DNS
-# it depends on DNS settings for you workstation
-# $ terraform apply -var rancher_enabled=true -auto-approve
 resource "rancher2_bootstrap" "admin" {
   count = var.rancher_enabled ? 1 : 0
 

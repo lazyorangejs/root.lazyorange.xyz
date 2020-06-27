@@ -1,5 +1,12 @@
+variable "domain" {
+  type        = string
+  description = "(Required) A domain name, for instance rancher-example.lazyorange.xyz"
+}
+
 variable "do_token" {
-  type = string
+  type        = string
+  default     = ""
+  description = "(Optional) A digital ocean token, will be used to create Kubernetes cluster, setup DNS records by using ExternalDNS"
 }
 
 variable "cf_token" {
@@ -10,7 +17,7 @@ variable "cf_token" {
 
 variable "rancher_enabled" {
   type        = bool
-  default     = false
+  default     = true
   description = "(Optional) Rancher will be installed when DO Kubernetes cluster is up and running"
 }
 

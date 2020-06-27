@@ -1,5 +1,5 @@
 locals {
-  domain        = "scaleway-rancher-example.lazyorange.xyz"
+  domain        = var.domain
   cloudProvider = "scaleway"
   kubernetes    = module.scaleway.kubernetes
 }

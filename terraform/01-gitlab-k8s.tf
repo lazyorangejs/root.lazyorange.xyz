@@ -14,7 +14,7 @@ module "gitlab_docker_registry" {
   enabled            = true
   k8s_secret_enabled = true
 
-  gitlab_group_id = module.cluster_settings.settings.gitlab_group_backend_id
+  gitlab_group_id = module.cluster_settings.settings.gitlab.group_id
   kubernetes      = local.kubernetes
 }
 
@@ -27,7 +27,7 @@ module "gitlab_k8s_cluster" {
 
   dns_zone          = local.domain
   cluster_name      = module.cluster_settings.cluster_name
-  root_gitlab_group = module.cluster_settings.settings.gitlab_group_backend_id
+  root_gitlab_group = module.cluster_settings.settings.gitlab.group_id
 
   kubernetes_token    = local.kubernetes.kubernetes_token
   kubernetes_endpoint = local.kubernetes.kubernetes_endpoint

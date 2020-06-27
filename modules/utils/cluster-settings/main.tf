@@ -1,9 +1,7 @@
-
-
 data "gitlab_group" "this" {
-  count = length(local.settings.gitlab_group_backend_id) > 0 ? 1 : 0
+  count = length(local.settings.gitlab.group_id) > 0 ? 1 : 0
 
-  group_id = local.gitlab_group_backend_id
+  group_id = local.gitlab_group_id
 }
 
 locals {
@@ -12,8 +10,8 @@ locals {
   cluster_file = "${abspath(path.root)}/cluster.yaml"
   cluster      = yamldecode(fileexists(local.cluster_file) ? file(local.cluster_file) : file("${path.module}/settings.yml")).cluster
 
-  gitlab_group_backend_id = length(var.gitlab_group_id) > 0 ? var.gitlab_group_id : local.cluster.gitlab.group_id
-  cluster_name            = "${replace("${data.gitlab_group.this.0.full_path}", "/", "-")}-${local.cluster.env}"
+  gitlab_group_id = length(var.gitlab_group_id) > 0 ? var.gitlab_group_id : local.cluster.gitlab.group_id
+  cluster_name    = "${replace("${data.gitlab_group.this.0.full_path}", "/", "-")}-${local.cluster.env}"
 
   sso = merge(local.cluster.sso, {
     enabled = true
@@ -49,10 +47,9 @@ locals {
       # Setup CI/CD environment variables for Gitlab pipelines
       # for instance, https://gitlab.com/lazyorangejs/infra/lab.lazyorange.xyz
       infra_project_id = length(var.root_gitlab_project) > 0 ? var.root_gitlab_project : lookup(local.cluster.gitlab, "infra_project_id", "")
+      # https://gitlab.com/lazyorangejs/lab
+      group_id = local.gitlab_group_id
     }
-
-    # https://gitlab.com/lazyorangejs/lab
-    gitlab_group_backend_id = local.gitlab_group_backend_id
   })
 
   cert_manager = {
@@ -63,12 +60,12 @@ locals {
     dev         = "development"
     develop     = "development"
     development = "development"
-    
+
     # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L62
-    staging     = "staging"
+    staging = "staging"
     # https://gitlab.com/gitlab-org/gitlab-foss/-/blob/3ef9553486f5be24b6845fd10fc7e21e8121dedd/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml#L122
-    prod        = "production"
-    production  = "production"
+    prod       = "production"
+    production = "production"
   }
 
   gitlab_env_scope = lookup(local.scopes, local.settings.env, "*")

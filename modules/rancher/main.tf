@@ -1,6 +1,5 @@
 locals {
   rancher_enabled  = var.enabled ? 1 : 0
-  rancher_hostname = var.hostname
   rancher_version  = "2.4.3"
 
   letsEncryptEnabled = var.letsEncrypt.enabled
@@ -50,4 +49,12 @@ resource "helm_release" "rancher_server" {
     name  = "letsEncrypt.email"
     value = local.letsEncryptEmail
   }
+}
+
+output "i_am_ready" {
+  value       = true
+  sensitive   = false
+  depends_on  = [
+    helm_release.rancher_server
+  ]
 }

@@ -5,4 +5,5 @@ module "external_dns" {
 
   enabled  = local.ingress_stack.external_dns_enabled
   do_token = var.do_token
+  cf_token = var.cf_token
 }

@@ -1,11 +1,3 @@
-locals {
-  rancher_enabled  = var.enabled ? 1 : 0
-  rancher_version  = "2.4.3"
-
-  letsEncryptEnabled = var.letsEncrypt.enabled
-  letsEncryptEmail   = local.letsEncryptEnabled ? var.letsEncrypt.email : ""
-}
-
 # helm upgrade --namespace cattle-system --install --set addLocal=false --set hostname=rancher.lab.lazyorange.xyz rancher rancher-stable/rancher
 # https://github.com/rancher/rancher/tree/master/chart
 # https://github.com/rancher/rancher/blob/master/chart/values.yaml
@@ -37,7 +29,7 @@ resource "helm_release" "rancher_server" {
 
   set {
     name  = "addLocal"
-    value = "false"
+    value = var.add_local
   }
 
   set {

@@ -39,10 +39,10 @@ resource "scaleway_k8s_pool_beta" "main" {
   cluster_id          = join("", scaleway_k8s_cluster_beta.default.*.id)
   name                = "main"
   node_type           = "DEV1_M"
-  size                = 2
+  size                = 1
   autoscaling         = true
   autohealing         = true
-  min_size            = 2
+  min_size            = 1
   max_size            = 15
   wait_for_pool_ready = true
 }
@@ -55,6 +55,8 @@ output "kubernetes" {
     kubernetes_endpoint = length(scaleway_k8s_cluster_beta.default) > 0 ? scaleway_k8s_cluster_beta.default.0.kubeconfig[0].host : ""
     kubernetes_token    = length(scaleway_k8s_cluster_beta.default) > 0 ? scaleway_k8s_cluster_beta.default.0.kubeconfig[0].token : ""
     kubernetes_ca_cert  = length(scaleway_k8s_cluster_beta.default) > 0 ? scaleway_k8s_cluster_beta.default.0.kubeconfig[0].cluster_ca_certificate : ""
+
+    kubeconfig = length(scaleway_k8s_cluster_beta.default) > 0 ? scaleway_k8s_cluster_beta.default.0.kubeconfig[0].config_file : ""
   }
 
   description = "Credentials for Kubernetes which can be used by Kubernetes and Helm providers"

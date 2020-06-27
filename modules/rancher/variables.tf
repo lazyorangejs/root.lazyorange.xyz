@@ -4,6 +4,17 @@ variable "enabled" {
   description = "Please note it requires permissions for creating namespaces"
 }
 
+variable "rancher_version" {
+  type        = string
+  default     = "2.4.3"
+  description = "A rancher server version"
+}
+
+variable "add_local" {
+  type    = bool
+  default = false
+}
+
 variable "hostname" {
   type        = string
   description = "Fully qualified name to reach your Rancher server (https://github.com/rancher/rancher/blob/master/chart/values.yaml#L39)"

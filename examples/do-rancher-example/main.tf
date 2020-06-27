@@ -1,34 +1,18 @@
 # terraform apply -auto-approve
-# terraform apply -var rancher_enabled=true -auto-approve
 
 locals {
-  domain           = "do-rancher-example.lazyorange.xyz"
   letsEncryptEmail = "vymarkov@gmail.com"
 
-  cloudProvider                = "digitalocean"
   clusterName                  = "rancher-mission-control"
   defaultLetsEncryptIssuerName = "letsencrypt-prod"
 
   cert_manager_settings = {
     digitalocean = length(var.do_token) > 0 ? "digitalocean-issuer" : local.defaultLetsEncryptIssuerName
-    default      = local.defaultLetsEncryptIssuerName
   }
 
-  defaultIssuerName = lookup(local.cert_manager_settings, local.cloudProvider, "default")
+  defaultIssuerName = lookup(local.cert_manager_settings, local.cloudProvider, local.defaultLetsEncryptIssuerName)
   rancherHostname   = format("rancher.%s", local.domain)
   rancherUrl        = format("https://%s", local.rancherHostname)
-
-  kubernetes = module.digitalocean.kubernetes
-}
-
-module "digitalocean" {
-  source  = "../../modules/cloud/doks"
-  enabled = true
-
-  kubernetes_version = "1.16"
-  region             = "fra1"
-  cluster_name       = local.clusterName
-  domain             = local.domain
 }
 
 module "ingress_stack" {
@@ -39,6 +23,7 @@ module "ingress_stack" {
   domain            = local.domain
   defaultIssuerName = local.defaultIssuerName
   do_token          = var.do_token
+  cf_token          = var.cf_token
 
   settings = {
     kong = {
@@ -75,6 +60,7 @@ module "rancher_server" {
 
   ingressClass     = "kong"
   ingressTlsSource = "secret"
+  add_local        = true
   clusterIssuer    = local.defaultIssuerName
   hostname         = local.rancherHostname
 }

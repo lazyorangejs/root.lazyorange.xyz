@@ -8,6 +8,12 @@ variable "do_token" {
   default = ""
 }
 
+variable "cf_token" {
+  type        = string
+  default     = ""
+  description = "(Optional) A cloudflare token, will be used to setup DNS records by using ExternalDNS"
+}
+
 variable "domain" {
   type = string
 }
@@ -38,6 +44,7 @@ variable "kubernetes" {
     kubernetes_endpoint = string
     kubernetes_token    = string
     kubernetes_ca_cert  = string
+    k8s_provider        = string
   })
 
   description = "Kubernetes credentials which will be used by Kubernetes and Helm providers"

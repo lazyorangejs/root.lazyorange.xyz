@@ -10,6 +10,8 @@
 $ export SCW_DEFAULT_ORGANIZATION_ID=<your_organization_id>
 ```
 3. Create a token and the set as environment variables.
+![image](assets/Screen Shot 2020-06-27 at 4.29.37 PM.png)
+![image](assets/Screen Shot 2020-06-27 at 4.30.01 PM.png)
 ```bash
 $ export SCW_ACCESS_KEY=<your_access_key>
 $ export SCW_SECRET_KEY=<your_secret_key>

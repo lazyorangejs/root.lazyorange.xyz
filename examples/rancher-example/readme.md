@@ -16,11 +16,11 @@ This module will create:
 ### Requirements
 
 - [Scaleway Account](https://www.scaleway.com/en/) If you want to run Kubernetes on Scaleway, preffered way. You will be charged for one node DEV1-M [€7.99/month](https://www.scaleway.com/en/pricing/#virtual-instances) within you cluster, one load balancer [€8.99/month](https://www.scaleway.com/en/pricing/#load-balancer), the control plane is [free](https://www.scaleway.com/en/pricing/#kubernetes-kapsule)
-- [Cloudflare Account](https://www.cloudflare.com) You need to provide CloudFlare token to use with ExternalDNS, can be skipped, but you will have to by myself to setup DNS record within your DNS provider to reach out rancher server.
+- [Cloudflare Account](https://www.cloudflare.com) You need to provide CloudFlare token to use with ExternalDNS, can be skipped, but you will have to setup DNS record within your DNS provider to reach out rancher server
 
 or 
 
-- [DigitalOcean Account](https://m.do.co/c/cab44dbb5640) **You can support this project by using my referral link**, if you want to run Kubernetes on Digital Ocean.
+- [DigitalOcean Account](https://m.do.co/c/cab44dbb5640) **You can support this project by using my referral link**, if you want to run Kubernetes on Digital Ocean
 - [Terraform](https://www.terraform.io/downloads.html) (v0.12.13+)
 
 ## Optional
@@ -33,8 +33,8 @@ If you don't want install all these tools you can open this repo from VS Code by
 
 ## Installation and setup
 
-1.1 Setup Scaleway credentials (skip if you are not going to use Scaleway within this example).
-In the result these env variables **must be** presented 
+1.1 Setup [Scaleway credentials](docs/how-to-obtain-scaleway-credentials.md) (skip if you are not going to use Scaleway within this example).
+In the result these env variables **must be** presented.
 
 ```bash
 export SCW_ACCESS_KEY="<your_access_key>"
@@ -43,13 +43,18 @@ export SCW_DEFAULT_ORGANIZATION_ID="<your_organization_id>"
 export SCW_DEFAULT_ZONE=fr-par-1
 export SCW_DEFAULT_REGION=fr-par
 
-export TF_VAR_cf_token="your_claudflare_token"
 export TF_VAR_domain="your_domain_name"
 export TF_VAR_rancher_password="mah1zuxoh0uPhu8pinahZ"
 ```
 
-2. Apply terraform config:
+1.2. Create CloudFlare access token as decribed [here](docs/how-to-obtain-cloudflare-credentials.md):
 ```bash
+export TF_VAR_cf_token="your_claudflare_token"
+```
+
+2. Init and apply terraform config:
+```bash
+terraform init
 terraform apply -auto-approve
 ```
 

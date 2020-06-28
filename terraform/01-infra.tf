@@ -5,6 +5,7 @@ module "ingress_stack" {
   kubernetes        = local.kubernetes
   do_token          = var.do_token
   defaultIssuerName = module.cluster_settings.settings.cert_manager.defaultIssuerName
+  settings          = module.cluster_settings.settings.ingress
 }
 
 module "logging_stack" {

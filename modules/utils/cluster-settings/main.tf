@@ -69,6 +69,13 @@ locals {
   }
 
   gitlab_env_scope = lookup(local.scopes, local.settings.env, "*")
+
+  ingress_settings = merge(local.cluster.stacks.ingress, {
+    cert_manager = {
+      enabled          = local.cluster.stacks.ingress.cert_manager.enabled
+      letsEncryptEmail = local.cluster.domain.letsEncryptEmail
+    }
+  })
 }
 
 output "doks_enabled" {
@@ -97,5 +104,9 @@ output "gitlab_env_scope" {
 }
 
 output "settings" {
-  value = merge(local.settings, { sso = local.sso, cert_manager = local.cert_manager })
+  value = merge(local.settings, {
+    sso          = local.sso,
+    cert_manager = local.cert_manager,
+    ingress      = local.ingress_settings
+  })
 }

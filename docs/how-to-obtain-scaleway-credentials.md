@@ -4,6 +4,8 @@
 
 1. Get you credentials [here](https://console.scaleway.com/account/organization/credentials).
 2. Copy Organization ID then set as environment variable.
+![image](assets/Screen Shot 2020-06-27 at 4.26.22 PM.png)
+
 ```bash
 $ export SCW_DEFAULT_ORGANIZATION_ID=<your_organization_id>
 ```

@@ -20,7 +20,7 @@ This module will create:
 
 or 
 
-- [DigitalOcean Account](https://m.do.co/c/cab44dbb5640) **You can support this project by using my referral link**, if you want to run Kubernetes on Digital Ocean
+- [DigitalOcean Account](https://m.do.co/c/cab44dbb5640) If you want to run Kubernetes on Digital Ocean (**You can support this project by using my referral link**)
 - [Terraform](https://www.terraform.io/downloads.html) (v0.12.13+)
 
 ## Optional

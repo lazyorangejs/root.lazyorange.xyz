@@ -2,7 +2,7 @@ cluster:
   env: sandbox
   enabled: yes
   domain:
-    name: do-basic-example.lab.lazyorange.xyz
+    name: do-basic-example.lazyorange.xyz
     letsEncryptEmail: vymarkov@gmail.com
   cloud:
     provider: digitalocean

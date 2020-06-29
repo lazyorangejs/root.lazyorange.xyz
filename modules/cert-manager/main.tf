@@ -58,3 +58,11 @@ resource "helm_release" "cert_manager_issuers" {
 
   depends_on = [helm_release.cert_manager]
 }
+
+output "i_am_ready" {
+  value       = true
+  description = ""
+  depends_on  = [
+    helm_release.cert_manager_issuers
+  ]
+}

@@ -4,7 +4,7 @@
 module "cert_manager" {
   source = "../../modules/cert-manager"
 
-  enabled    = local.ingress_stack.enabled && local.ingress_stack.cert_manager_enabled
+  enabled    = local.ingress_stack.cert_manager_enabled
   kubernetes = local.kubernetes
 
   defaultIssuerName = var.defaultIssuerName
@@ -16,7 +16,7 @@ module "cert_manager" {
 module "cert_manager_digitalocean_issuer" {
   source = "../../modules/cert-manager-issuer"
 
-  enabled    = local.ingress_stack.enabled && local.ingress_stack.cert_manager_enabled && length(var.do_token) > 0
+  enabled    = module.cert_manager.i_am_ready && local.ingress_stack.cert_manager_enabled && length(var.do_token) > 0
   app_name   = "cert-manager-digitalocean-issuer"
   kubernetes = merge(local.kubernetes, { namespace = "cert-manager" })
 

@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-provider "scaleway" {
-  zone   = "fr-par-1"
-  region = "fr-par"
-}
+# Terraform Provider References:
+# - https://www.terraform.io/docs/providers/scaleway/index.html
+# - https://www.terraform.io/docs/providers/scaleway/index.html#arguments-reference
+provider "scaleway" {}

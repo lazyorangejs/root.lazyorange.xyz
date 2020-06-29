@@ -1,10 +1,11 @@
 module "ingress_stack" {
-  source = "./ingress-stack"
+  source = "../terraform/ingress-stack"
 
   domain            = local.domain
   kubernetes        = local.kubernetes
   do_token          = var.do_token
   defaultIssuerName = module.cluster_settings.settings.cert_manager.defaultIssuerName
+  settings          = module.cluster_settings.settings.ingress
 }
 
 module "logging_stack" {
@@ -49,28 +50,3 @@ module "auth" {
 
   kubernetes = local.kubernetes
 }
-
-# Rancher Server v2.4.3 (stable)
-#
-# You can't remove rancher by removing rancher helm chart.
-# - https://rancher.com/docs/rancher/v2.x/en/faq/removing-rancher/#what-if-i-don-t-want-rancher-anymore
-module "rancher_server" {
-  source = "../modules/rancher"
-
-  enabled    = module.cluster_settings.rancher_enabled
-  kubernetes = local.kubernetes
-
-  # https://rancher.com/docs/rancher/v2.x/en/installation/options/chart-options/#common-options
-  # please note this module support letsEncrypt only, other options will be added later
-  # your service should be available outside of private network
-  letsEncrypt = {
-    enabled = false
-    email   = local.letsEncryptEmail
-  }
-
-  ingressClass     = "nginx"
-  clusterIssuer    = module.cluster_settings.settings.cert_manager.defaultIssuerName
-  ingressTlsSource = "secret"
-  hostname         = format("rancher.%s", local.domain)
-}
-

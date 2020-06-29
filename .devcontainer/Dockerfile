@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/lazyorangejs/infra/lab.lazyorange.xyz:terraform-v0.12.25-helmfile-v0.116.0-doctl-1.43.0-kubectl-v1.16.0-helm-v3.2.1
+FROM registry.gitlab.com/lazyorangejs/infra/root.lazyorange.xyz:terraform-v0.12.25-helmfile-v0.116.0-doctl-1.43.0-kubectl-v1.16.0-helm-v3.2.1
 
 RUN apt-get update && apt-get install libncurses5-dev libncursesw5-dev -yq
 # https://github.com/ahmetb/kubectl-aliases

@@ -34,7 +34,7 @@ resource "helm_release" "kube_state_metrics" {
   version = local.kube_state_metrics_version
 
   atomic           = true
-  create_namespace = false
+  create_namespace = true
 
   namespace = var.kubernetes.namespace
 

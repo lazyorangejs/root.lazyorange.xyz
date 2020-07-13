@@ -39,12 +39,12 @@ resource "helm_release" "apm_server" {
   }
 
   set {
-    name = "ingress.enabled"
+    name  = "ingress.enabled"
     value = length(var.server_url) > 0 ? "true" : "false"
   }
 
   set {
-    name = "ingress.hosts[0]"
+    name  = "ingress.hosts[0]"
     value = length(var.server_url) > 0 ? var.server_url : "chart-example.local"
   }
 }

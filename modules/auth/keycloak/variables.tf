@@ -4,12 +4,12 @@ variable "enabled" {
 }
 
 variable "app_name" {
-  type  = string
+  type = string
 }
 
 variable "ingress_values" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Ingress values encoded as YAML"
 }
 

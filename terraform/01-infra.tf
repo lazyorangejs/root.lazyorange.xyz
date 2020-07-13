@@ -1,11 +1,12 @@
 module "ingress_stack" {
   source = "../terraform/ingress-stack"
 
-  domain            = local.domain
-  kubernetes        = local.kubernetes
-  do_token          = var.do_token
-  defaultIssuerName = module.cluster_settings.settings.cert_manager.defaultIssuerName
-  settings          = module.cluster_settings.settings.ingress
+  domain              = local.domain
+  kubernetes          = local.kubernetes
+  do_token            = var.do_token
+  cf_token            = var.cf_token
+  default_issuer_name = module.cluster_settings.settings.cert_manager.defaultIssuerName
+  settings            = module.cluster_settings.settings.ingress
 }
 
 module "logging_stack" {
@@ -28,22 +29,18 @@ module "monitoring_stack" {
     namespace = "monitoring"
   })
 
-  metrics_server_enabled      = true
-  kube_state_metrics_enabled  = true
-  prometheus_operator_enabled = false
-
-  settings = {
+  settings = merge(module.cluster_settings.settings.monitoring, {
     sentry = {
       enabled = length(var.sentry_dsn) > 0
       dsn     = var.sentry_dsn
     }
-  }
+  })
 }
 
 module "auth" {
   source = "./auth"
 
-  sso_settings = merge(
+  settings = merge(
     merge(var.idp_creds, { domain = local.domain }),
     module.cluster_settings.settings.sso
   )

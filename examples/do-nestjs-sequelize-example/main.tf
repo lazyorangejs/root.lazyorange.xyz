@@ -24,7 +24,7 @@ data "digitalocean_projects" "do_projects" {}
 
 data "digitalocean_projects" "default" {
   filter {
-    key = "is_default"
+    key    = "is_default"
     values = ["true"]
   }
 }

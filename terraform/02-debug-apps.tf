@@ -18,8 +18,8 @@ module "echo_server_nginx" {
   ingress_values = templatefile(
     "${path.module}/debug-apps/echo-server-nginx-ingress-values.yaml",
     {
-      ingressClass          = "nginx"
-      oauthExternalAuthHost = "accounts.lab.lazyorange.xyz"
+      ingressClass          = module.cluster_settings.settings.default_infra_ingress_class
+      oauthExternalAuthHost = format("accounts.%s", local.domain)
     }
   )
 }

@@ -5,7 +5,8 @@ data "gitlab_group" "this" {
 }
 
 locals {
-  infraIngressClass = "nginx"
+  defaultInfraIngressClass     = lookup(local.cluster.infra.nginx, "class", "nginx-infra")
+  defaultLetsEncryptIssuerName = format("letsencrypt-%s-prod", local.defaultInfraIngressClass)
 
   cluster_file = "${abspath(path.root)}/cluster.yaml"
   cluster      = yamldecode(fileexists(local.cluster_file) ? file(local.cluster_file) : file("${path.module}/settings.yml")).cluster
@@ -13,11 +14,17 @@ locals {
   gitlab_group_id = length(var.gitlab_group_id) > 0 ? var.gitlab_group_id : local.cluster.gitlab.group_id
   cluster_name    = "${replace("${data.gitlab_group.this.0.full_path}", "/", "-")}-${local.cluster.env}"
 
+  control_plane = lookup(local.cluster, "control_plane", { rancher = { enabled = false } })
+
+  idp_settings = merge(var.idp_credentials, {
+    enabled = (length(var.idp_credentials.clientID) > 0 && length(var.idp_credentials.clientSecret) > 0)
+  })
+
   sso = merge(local.cluster.sso, {
     enabled = true
 
-    ingressClass = local.infraIngressClass
-    gitlabGroup  = join("", data.gitlab_group.this.*.full_path)
+    ingress_class = local.defaultInfraIngressClass
+    gitlabGroup   = join("", data.gitlab_group.this.*.full_path)
 
     keycloak = {
       enabled = false
@@ -28,16 +35,10 @@ locals {
     }
   })
 
-  defaultLetsEncryptIssuerName = "letsencrypt-prod"
-
   cert_manager_settings = {
     digitalocean = local.settings.doks_enabled && length(var.do_token) > 0 ? "digitalocean-issuer" : local.defaultLetsEncryptIssuerName
-    default      = local.defaultLetsEncryptIssuerName
+    scaleway     = local.settings.scaleway_enabled && length(var.cf_token) > 0 ? "cloudflare-cluster-issuer" : local.defaultLetsEncryptIssuerName
   }
-
-  control_plane = lookup(local.cluster, "control_plane", { rancher = { enabled = false } })
-
-  rancher_enabled = lookup(local.control_plane.rancher, "enabled", false)
 
   settings = merge(local.cluster, {
     doks_enabled     = local.cluster.enabled && local.cluster.cloud.provider == "digitalocean"
@@ -51,10 +52,6 @@ locals {
       group_id = local.gitlab_group_id
     }
   })
-
-  cert_manager = {
-    defaultIssuerName = lookup(local.cert_manager_settings, local.cluster.cloud.provider, "default")
-  }
 
   scopes = {
     dev         = "development"
@@ -70,16 +67,18 @@ locals {
 
   gitlab_env_scope = lookup(local.scopes, local.settings.env, "*")
 
+  monitoring_settings = merge(local.cluster.stacks.monitoring, {
+    ingress_class = local.defaultInfraIngressClass
+  })
+
   ingress_settings = merge(local.cluster.stacks.ingress, {
+    ingress_class = [local.defaultInfraIngressClass]
+
     cert_manager = {
       enabled          = local.cluster.stacks.ingress.cert_manager.enabled
       letsEncryptEmail = local.cluster.domain.letsEncryptEmail
     }
   })
-}
-
-output "doks_enabled" {
-  value = local.settings.doks_enabled
 }
 
 output "cluster_enabled" {
@@ -91,12 +90,7 @@ output "cluster_name" {
 }
 
 output "rancher_enabled" {
-  value = local.rancher_enabled
-}
-
-output "infraIngressClass" {
-  value       = "nginx"
-  description = "Default ingress class used across infrastructure services, don't use for internet facing services"
+  value = lookup(local.control_plane.rancher, "enabled", false)
 }
 
 output "gitlab_env_scope" {
@@ -105,8 +99,13 @@ output "gitlab_env_scope" {
 
 output "settings" {
   value = merge(local.settings, {
-    sso          = local.sso,
-    cert_manager = local.cert_manager,
-    ingress      = local.ingress_settings
+    idp                         = local.idp_settings,
+    default_infra_ingress_class = local.defaultInfraIngressClass
+    sso                         = local.sso,
+    cert_manager = {
+      defaultIssuerName = lookup(local.cert_manager_settings, local.cluster.cloud.provider, local.defaultLetsEncryptIssuerName)
+    },
+    ingress    = local.ingress_settings
+    monitoring = merge(local.monitoring_settings, { idp_credentials = local.idp_settings })
   })
 }

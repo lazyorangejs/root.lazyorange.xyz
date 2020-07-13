@@ -17,8 +17,9 @@ resource "helm_release" "oauth2_proxy" {
   chart   = "oauth2-proxy"
   version = local.version
 
-  atomic    = true
-  namespace = var.kubernetes.namespace
+  atomic           = true
+  create_namespace = true
+  namespace        = var.kubernetes.namespace
 
   values = [
     templatefile("${path.module}/values.yaml", merge(var.client, {

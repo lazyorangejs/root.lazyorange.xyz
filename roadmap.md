@@ -1,5 +1,7 @@
 # Project Roadmap
 
+## Overview
+
 ### v.0.0.x Basic Scenario
 
 - [x] Setup developer-friendly environment to deploy Kubernetes from Gitlab CI and connect to Gitlab group 
@@ -12,15 +14,19 @@
 - [x] Setup Kubernetes Docker Registry Secrets into CI/CD env variables for Gitlab's Auto Deploy Job
 
 ### v0.0.1
+
+- [ ] Configure Prometheus Operator, Graphana Dashboards, etc
 - [ ] Create a sentry terraform module to setup and configure a sentry project per GitLab project
 
 ### Backlog
+
 - [ ] Setup Kubernetes Docker Registry Secrets for developers to play with Gitlab Docker registry
 - [ ] Setup Gitlab Runner node group to use Gitlab Runners inside Kubernetes
 - [ ] Setup [Elastic Uptime Monitoring](https://www.elastic.co/uptime-monitoring)
 - [ ] Setup [IngressMonitor Controller](https://github.com/stakater/IngressMonitorController)
 
 Reffrences:
-- https://github.com/oauth2-proxy/oauth2-proxy
-- https://github.com/helm/charts/tree/master/stable/oauth2-proxy
-- https://github.com/nokia/kong-oidc
+
+- <https://github.com/oauth2-proxy/oauth2-proxy>
+- <https://github.com/helm/charts/tree/master/stable/oauth2-proxy>
+- <https://github.com/nokia/kong-oidc>

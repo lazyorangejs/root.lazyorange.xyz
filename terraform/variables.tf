@@ -13,6 +13,12 @@ variable "do_token" {
   default = ""
 }
 
+variable "cf_token" {
+  type        = string
+  default     = ""
+  description = "(Optional) A cloudflare token, will be used to setup DNS records by using ExternalDNS"
+}
+
 variable "root_gitlab_project" {
   type        = string
   default     = ""
@@ -49,10 +55,11 @@ variable "sentry_dsn" {
 # - https://github.com/terraform-providers/terraform-provider-gitlab/issues/321
 variable "idp_creds" {
   type = object({
+    provider     = string
     clientID     = string
     clientSecret = string
   })
-  default     = { clientID = "", clientSecret = "" }
+  default     = { provider = "", clientID = "", clientSecret = "" }
   description = "(Optional) Identity Provider client ID and client secret will be used to restict access to infra components such Elastic Kibana, Prometheus, Grafana, etc"
 }
 

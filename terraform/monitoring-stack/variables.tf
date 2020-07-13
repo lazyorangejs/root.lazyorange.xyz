@@ -13,6 +13,27 @@ variable "settings" {
       enabled = bool
       dsn     = string
     })
+
+    idp_credentials = object({
+      provider     = string
+      enabled      = bool
+      clientID     = string
+      clientSecret = string
+    })
+
+    ingress_class = string
+
+    prometheus_operator = object({
+      enabled = bool
+    })
+
+    kube_state_metrics = object({
+      enabled = bool
+    })
+
+    metrics_server = object({
+      enabled = bool
+    })
   })
 
   default = {
@@ -20,22 +41,28 @@ variable "settings" {
       enabled = false
       dsn     = ""
     }
+
+    ingress_class = "nginx"
+
+    idp_credentials = {
+      enabled      = false
+      provider     = ""
+      clientID     = ""
+      clientSecret = ""
+    }
+
+    prometheus_operator = {
+      enabled = false
+    }
+
+    kube_state_metrics = {
+      enabled = true
+    }
+
+    metrics_server = {
+      enabled = true
+    }
   }
-}
-
-variable "prometheus_operator_enabled" {
-  type    = bool
-  default = true
-}
-
-variable "metrics_server_enabled" {
-  type    = bool
-  default = false
-}
-
-variable "kube_state_metrics_enabled" {
-  type    = bool
-  default = false
 }
 
 variable "kubernetes" {

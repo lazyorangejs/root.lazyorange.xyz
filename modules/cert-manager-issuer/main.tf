@@ -1,6 +1,5 @@
 locals {
   enabled = var.enabled ? 1 : 0
-  version = "CHANGE_ME"
 }
 
 resource "helm_release" "cert_manager_issuers" {
@@ -32,7 +31,7 @@ resource "helm_release" "cert_manager_issuers" {
     value = var.ingressClass
   }
 
-  set {
+  set_sensitive {
     name  = "doToken"
     value = var.do_token
   }

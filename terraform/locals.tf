@@ -4,6 +4,8 @@ module "cluster_settings" {
   root_gitlab_project = var.root_gitlab_project
   gitlab_group_id     = var.root_gitlab_group_id
   do_token            = var.do_token
+  cf_token            = var.cf_token
+  idp_credentials     = var.idp_creds
 }
 
 locals {

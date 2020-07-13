@@ -19,12 +19,12 @@ module "gitlab_docker_registry" {
 }
 
 module "gitlab_k8s_cluster" {
-  source = "git::https://gitlab.com/lazyorangejs/staging.lazyorange.xyz//terraform/module/gitlab-kube-cluster?ref=tags/v0.6.0"
-  stage  = module.cluster_settings.gitlab_env_scope
+  source  = "lazyorangejs/kube-cluster/gitlab"
+  version = "0.1.0-rc.0"
 
-  enabled                     = module.cluster_settings.cluster_enabled
-  group_gitlab_runner_enabled = false
+  enabled = module.cluster_settings.cluster_enabled
 
+  stage             = module.cluster_settings.gitlab_env_scope
   dns_zone          = local.domain
   cluster_name      = module.cluster_settings.cluster_name
   root_gitlab_group = module.cluster_settings.settings.gitlab.group_id

@@ -5,6 +5,8 @@ clusterIssuer:
   challengeProvider: http01 # digitalocean
   
   http01:
-    ingressClass: nginx
+    ingressClass:
+    - nginx
+    - kong
 
-  letsEncryptEmail: ""
+  letsEncryptEmail: "devops@example.com"

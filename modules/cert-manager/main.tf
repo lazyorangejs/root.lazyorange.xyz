@@ -38,10 +38,18 @@ resource "helm_release" "cert_manager_issuers" {
 
   namespace = "cert-manager"
 
-  values = []
+  values = [
+    yamlencode({
+      clusterIssuer = {
+        http01 = {
+          ingressClass = var.ingress_classes
+        }
+      }
+    })
+  ]
 
   set {
-    name = "clusterIssuer.challengeProvider"
+    name  = "clusterIssuer.challengeProvider"
     value = "http01"
   }
 
@@ -51,18 +59,14 @@ resource "helm_release" "cert_manager_issuers" {
     value = var.letsEncryptEmail
   }
 
-  set {
-    name = "clusterIssuer.http01.ingressClass"
-    value = var.ingressClass
-  }
-
   depends_on = [helm_release.cert_manager]
 }
 
 output "i_am_ready" {
   value       = true
   description = ""
-  depends_on  = [
+
+  depends_on = [
     helm_release.cert_manager_issuers
   ]
 }

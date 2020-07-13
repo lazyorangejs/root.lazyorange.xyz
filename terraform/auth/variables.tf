@@ -1,8 +1,9 @@
-variable "sso_settings" {
+variable "settings" {
   type = object({
-    enabled      = bool
-    domain       = string
-    ingressClass = string
+    enabled = bool
+
+    domain        = string
+    ingress_class = string
 
     clientID     = string
     clientSecret = string

@@ -6,8 +6,8 @@ resource "helm_release" "sentry_kubernetes" {
   repository = "https://kubernetes-charts-incubator.storage.googleapis.com/"
   namespace  = var.kubernetes.namespace
 
-  chart  = "sentry-kubernetes"
-  atomic = true
+  chart            = "sentry-kubernetes"
+  atomic           = true
   create_namespace = true
 
   set_sensitive {

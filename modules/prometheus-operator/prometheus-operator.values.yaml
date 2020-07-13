@@ -1,0 +1,9 @@
+# https://github.com/helm/charts/issues/19928#issuecomment-580403978
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+    patch:
+      enabled: false
+
+  tlsProxy:
+    enabled: false

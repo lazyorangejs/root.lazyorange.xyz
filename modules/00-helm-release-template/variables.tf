@@ -4,7 +4,7 @@ variable "enabled" {
 }
 
 variable "app_name" {
-  type  = string
+  type = string
 }
 
 variable "kubernetes" {

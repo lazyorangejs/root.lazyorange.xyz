@@ -5,5 +5,5 @@ metadata:
   name: cloudflare-api-token-secret
 type: Opaque
 stringData:
-  api-token: ""
+  api-token: "{{ .Values.cfToken | b64enc }}"
 {{- end }}

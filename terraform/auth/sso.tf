@@ -1,8 +1,12 @@
 module "nginx_ingress" {
-  source  = "../../modules/nginx-ingress"
-  enabled = local.sso_settings.enabled
+  source = "../../modules/nginx-ingress"
 
-  kubernetes = merge(var.kubernetes, { namespace = "ingress-nginx" })
+  enabled       = var.settings.enabled
+  ingress_class = var.settings.ingress_class
+
+  kubernetes = merge(var.kubernetes, {
+    namespace = "ingress-nginx"
+  })
 
   helm_values = yamlencode({
     controller = {
@@ -13,6 +17,7 @@ module "nginx_ingress" {
       },
       nodeSelector = {}
     },
+
     defaultBackend = {
       antiAffinity = "hard",
       kind         = "Both",
@@ -31,14 +36,13 @@ module "cluster_auth" {
 module "oauth2_proxy" {
   source = "../../modules/auth/oauth2-proxy"
 
-  enabled      = local.sso_settings.enabled
-  domain       = local.sso_settings.domain
-  ingressClass = local.sso_settings.ingressClass
+  enabled      = var.settings.enabled
+  domain       = var.settings.domain
+  ingressClass = var.settings.ingress_class
 
-  // https://gitlab.com/oauth/applications/145843
-  client = merge(local.sso_settings, {
+  client = merge(var.settings, {
     provider    = "gitlab",
-    gitlabGroup = local.sso_settings.gitlabGroup
+    gitlabGroup = var.settings.gitlabGroup
   })
 
   kubernetes = merge(var.kubernetes, { namespace = "cluster-idp" })
@@ -47,14 +51,14 @@ module "oauth2_proxy" {
 module "keycloak" {
   source = "../../modules/auth/keycloak"
 
-  enabled  = local.sso_settings.keycloak.enabled
+  enabled  = var.settings.keycloak.enabled
   app_name = "keycloak"
 
   ingress_values = templatefile(
     "${path.module}/keycloak-ingress-values.yaml",
     {
-      ingressClass = local.sso_settings.ingressClass
-      host         = "idp.${local.sso_settings.domain}"
+      ingressClass = var.settings.ingress_class
+      host         = "idp.${var.settings.domain}"
     }
   )
 

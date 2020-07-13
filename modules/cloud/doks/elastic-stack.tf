@@ -36,7 +36,7 @@ resource "digitalocean_kubernetes_node_pool" "elastic_stack" {
   min_nodes  = 1
   max_nodes  = 5
 
-  tags       = ["infra", "elastic-stack"]
+  tags = ["infra", "elastic-stack"]
 
   labels = {
     service  = "elastic-stack"

@@ -44,9 +44,9 @@ resource "helm_release" "rancher_server" {
 }
 
 output "i_am_ready" {
-  value       = true
-  sensitive   = false
-  depends_on  = [
+  value     = true
+  sensitive = false
+  depends_on = [
     helm_release.rancher_server
   ]
 }

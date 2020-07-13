@@ -9,7 +9,7 @@ variable "server_url" {
 }
 
 variable "ingress_values_file" {
-  type        = string
+  type = string
 }
 
 variable "helm_values_file" {

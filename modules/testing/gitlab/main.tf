@@ -13,7 +13,7 @@ resource "gitlab_group" "this" {
 
 resource "gitlab_project" "this" {
   name = random_pet.gitlab_project_name.id
-  
+
   namespace_id = gitlab_group.this.id
 }
 

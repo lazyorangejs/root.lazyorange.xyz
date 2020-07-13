@@ -40,19 +40,19 @@ resource "helm_release" "elastic_stack" {
     templatefile(
       "${path.module}/values.yaml",
       {
-        host = length(var.server_url) > 0 ? var.server_url : "chart-example.local",
+        host              = length(var.server_url) > 0 ? var.server_url : "chart-example.local",
         elasticsearchHost = "elasticsearch-master.logging"
       }
     ),
   ]
 
   set {
-    name = "kibana.ingress.enabled"
+    name  = "kibana.ingress.enabled"
     value = length(var.server_url) > 0 ? "true" : "false"
   }
 
   set {
-    name = "kibana.ingress.hosts[0]"
+    name  = "kibana.ingress.hosts[0]"
     value = length(var.server_url) > 0 ? var.server_url : "chart-example.local"
   }
 }

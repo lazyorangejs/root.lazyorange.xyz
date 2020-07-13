@@ -1,5 +1,5 @@
 variable "enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -18,24 +18,29 @@ variable "domain" {
   type = string
 }
 
-variable "defaultIssuerName" {
+variable "default_issuer_name" {
   type = string
 }
 
 variable "settings" {
   type = object({
-    kong         = object({ enabled = bool })
+    kong = object({ enabled = bool })
+
     cert_manager = object({
       enabled          = bool,
       letsEncryptEmail = string
     })
+
+    ingress_class = list(string)
+
     external_dns = object({ enabled = bool })
   })
 
   default = {
-    kong         = { enabled = true },
-    cert_manager = { enabled = true, letsEncryptEmail = "" },
-    external_dns = { enabled = true }
+    kong          = { enabled = true },
+    ingress_class = [""]
+    cert_manager  = { enabled = true, letsEncryptEmail = "" },
+    external_dns  = { enabled = true }
   }
 }
 

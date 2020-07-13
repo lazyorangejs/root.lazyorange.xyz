@@ -14,7 +14,7 @@ resource "helm_release" "CHANGE_ME" {
 
   atomic           = true
   create_namespace = true
-  namespace = var.kubernetes.namespace
+  namespace        = var.kubernetes.namespace
 
   values = [
     templatefile("${path.module}/values.yaml", {})

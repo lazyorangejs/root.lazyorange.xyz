@@ -4,8 +4,29 @@ variable "enabled" {
 }
 
 variable "grafana_url" {
-  type = string
+  type    = string
   default = ""
+}
+
+variable "ingress_class" {
+  type        = string
+  description = "(Required) Ingress class is used as a class for services such as Grafana and Prometheus"
+}
+
+variable "idp_credentials" {
+  type = object({
+    provider     = string
+    enabled      = bool
+    clientID     = string
+    clientSecret = string
+  })
+
+  default = {
+    enabled      = false
+    clientID     = ""
+    clientSecret = ""
+    provider     = ""
+  }
 }
 
 variable "kubernetes" {

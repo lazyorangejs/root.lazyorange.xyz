@@ -23,7 +23,7 @@ resource "helm_release" "kong_crd" {
   atomic           = true
   create_namespace = true
 
-  namespace        = var.kubernetes.namespace
+  namespace = var.kubernetes.namespace
 }
 
 # https://charts.konghq.com/
@@ -38,8 +38,8 @@ resource "helm_release" "kong" {
   chart   = "kong"
   version = local.version
 
-  atomic           = false
-  cleanup_on_fail  = false
+  atomic          = false
+  cleanup_on_fail = false
 
   create_namespace = true
   skip_crds        = true

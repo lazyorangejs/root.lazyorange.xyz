@@ -9,9 +9,9 @@ resource "helm_release" "kong_postgresql" {
   chart   = "postgresql"
   version = "8.6.8"
 
-  atomic          = true
-  cleanup_on_fail = true
-  skip_crds       = true
+  atomic           = true
+  cleanup_on_fail  = true
+  skip_crds        = true
   create_namespace = true
 
   namespace = var.kubernetes.namespace
@@ -24,7 +24,7 @@ resource "helm_release" "kong_postgresql" {
   }
 
   set {
-    name = "postgresqlPassword"
+    name  = "postgresqlPassword"
     value = local.db.pg_password
   }
 

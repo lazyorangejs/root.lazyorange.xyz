@@ -10,8 +10,8 @@ variable "helm_values_file" {
 }
 
 variable "ingress_values" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Ingress values encoded as YAML"
 }
 

@@ -3,6 +3,11 @@ variable "enabled" {
   default = false
 }
 
+variable "ingress_class" {
+  type        = string
+  description = "(Required) name of the ingress class to route through this controller"
+}
+
 variable "app_name" {
   type        = string
   default     = "ingress-nginx"
@@ -10,9 +15,9 @@ variable "app_name" {
 }
 
 variable "helm_values" {
-  description = "A path to file that contain common values to schedule pod on the right nodes (encoded as yaml string)"
   type        = string
   default     = ""
+  description = "A path to file that contain common values to schedule pod on the right nodes (encoded as yaml string)"
 }
 
 variable "kubernetes" {

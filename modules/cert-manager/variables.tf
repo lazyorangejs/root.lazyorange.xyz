@@ -28,16 +28,16 @@ variable "credentials" {
 }
 
 variable "domain" {
-  type        = string
-}
-
-variable "ingressClass" {
-  type    = string
-  default = "nginx"
-}
-
-variable "defaultIssuerName"{
   type = string
+}
+
+variable "ingress_classes" {
+  type    = list(string)
+  default = ["nginx"]
+}
+
+variable "defaultIssuerName" {
+  type    = string
   default = "letsencrypt-prod"
 }
 

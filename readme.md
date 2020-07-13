@@ -1,9 +1,7 @@
 # root.lazyorange.xyz
 
-A terraform configuration to create an AWS EKS cluster that can be connected 
+A terraform configuration to create an Scaleway Kapsule/Digital Ocean Kubernetes/AWS EKS cluster that can be connected 
 to your group clusters and then used across projects to use [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/#overview) feature.
-
-This module under the hood uses this awesome [AWS EKS](https://github.com/cloudposse/terraform-aws-eks-cluster) module by CloudPosse :cloud: and many others modules which make it possible this project :heart:.
 
 ## Motivation
 

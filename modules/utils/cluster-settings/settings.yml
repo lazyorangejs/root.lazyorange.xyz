@@ -10,6 +10,9 @@ cluster:
       enabled: yes
     keycloak:
       enabled: no
+  infra:
+    nginx:
+      class: "nginx-infra"
   control_plane:
     rancher: 
       enabled: yes

@@ -3,6 +3,11 @@ variable "enabled" {
   default = true
 }
 
+variable "release_name" {
+  type    = string
+  default = "echo-server"
+}
+
 variable "helm_values_file" {
   description = "A path to file that contain common values to schedule pod on the right nodes"
   type        = string

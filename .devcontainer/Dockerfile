@@ -9,3 +9,5 @@ RUN curl https://raw.githubusercontent.com/ahmetb/kubectl-aliases/master/.kubect
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx &&\
   ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx &&\
   ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+RUN echo "alias http='docker run -ti --net=host --rm alpine/httpie'" >> ~/.zshrc

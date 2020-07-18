@@ -7,8 +7,7 @@ locals {
 # https://charts.gitlab.io/
 resource "helm_release" "echo_server" {
   count = local.enabled
-
-  name = "echo-server"
+  name  = var.release_name
 
   repository = "https://charts.gitlab.io/"
   chart      = "auto-deploy-app"
@@ -17,7 +16,6 @@ resource "helm_release" "echo_server" {
 
   atomic           = true
   create_namespace = true
-  replace          = true
 
   namespace = var.kubernetes.namespace
 

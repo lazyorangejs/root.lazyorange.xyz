@@ -17,12 +17,13 @@ resource "helm_release" "httpbin_server" {
 
   atomic           = true
   create_namespace = true
-  replace          = true
 
   namespace = var.namespace
 
   values = [
-    templatefile("${path.module}/values.yaml", {})
+    templatefile("${path.module}/values.yaml", {
+      ingress_class = var.ingress_class
+    })
   ]
 
   set {

@@ -8,6 +8,10 @@ variable "namespace" {
   default = "default"
 }
 
+variable "ingress_class" {
+  type = string
+}
+
 variable "service_url" {
   type = string
 }

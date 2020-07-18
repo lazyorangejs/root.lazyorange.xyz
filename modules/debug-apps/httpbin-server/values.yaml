@@ -5,7 +5,7 @@ ingress:
     enabled: true
   annotations:
     kubernetes.io/tls-acme: "true"
-    kubernetes.io/ingress.class: "kong"
+    kubernetes.io/ingress.class: "${ingress_class}"
 
 service:
   url: ""

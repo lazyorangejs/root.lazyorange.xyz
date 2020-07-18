@@ -28,7 +28,7 @@ module "digitalocean_k8s" {
 }
 */
 
-module "digital_ocean_basic_example" {
+module "basic_example" {
   source = "../terraform"
 
   cf_token     = var.cf_token

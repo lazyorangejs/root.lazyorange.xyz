@@ -21,7 +21,7 @@ grafana:
   # https://grafana.com/docs/grafana/latest/auth/gitlab/#enable-gitlab-in-grafana
   grafana.ini:
     server:
-      root_url: https://grafana.sandbox.lazyorange.xyz
+      root_url: https://${grafana_url}
     paths:
       data: /var/lib/grafana/data
       logs: /var/log/grafana

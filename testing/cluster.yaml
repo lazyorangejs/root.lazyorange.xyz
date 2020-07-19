@@ -4,7 +4,7 @@ cluster:
   env: sandbox
   enabled: yes
   domain:
-    name: sandbox.lazyorange.xyz
+    name: testing.lazyorange.xyz
     letsEncryptEmail: vymarkov@gmail.com
   cloud:
     provider: scaleway

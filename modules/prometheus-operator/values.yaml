@@ -1,20 +1,40 @@
-prometheusOperator:
-  resources:
-    limits:
-      cpu: 200m
-      memory: 200Mi
-    requests:
-      cpu: 100m
-      memory: 100Mi
-
-prometheus:
- resources:
-    requests:
-      memory: 400Mi
-
 # https://github.com/helm/charts/tree/master/stable/grafana#configuration
+# https://github.com/helm/charts/tree/master/stable/grafana#import-dashboards
 grafana:
-  # dashboards:
+  defaultDashboardsEnabled: true
+  #
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+  dashboards:
+    default:
+      nodejs:
+        # Ref: https://grafana.com/grafana/dashboards/11159
+        gnetId: 11159
+        revision: 1
+        datasource: Prometheus
+      redis:
+        # Ref: https://grafana.com/grafana/dashboards/11835/reviews
+        gnetId: 11835
+        revision: 1
+        datasource: Prometheus
+      kong:
+        # Refs: 
+        # - https://grafana.com/grafana/dashboards/7424
+        # - https://docs.konghq.com/hub/kong-inc/prometheus/
+        gnetId: 7424
+        revision: 6
+        datasource: Prometheus
   #   # https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards
   #   ingress-nginx:
   #     url:

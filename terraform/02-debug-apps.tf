@@ -1,9 +1,9 @@
 module "echo_server" {
   source = "../modules/debug-apps/echo-server"
 
-  enabled    = local.debug_services.enabled && local.debug_services.echo_server_enabled
+  enabled      = local.debug_services.enabled && local.debug_services.echo_server_enabled
   release_name = "echo-server-kong"
-  service_url = format("echo-kong.%s", local.domain)
+  service_url  = format("echo-kong.%s", local.domain)
 
   kubernetes = merge(local.kubernetes, { namespace = "debug-apps" })
 }
@@ -33,5 +33,5 @@ module "httpbin_server" {
   kubernetes = merge(local.kubernetes, { namespace = "debug-apps" })
 
   ingress_class = "nginx"
-  service_url = format("httpbin.%s", local.domain)
+  service_url   = format("httpbin.%s", local.domain)
 }

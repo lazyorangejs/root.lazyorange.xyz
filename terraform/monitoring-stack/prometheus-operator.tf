@@ -8,3 +8,8 @@ module "prometheus_operator" {
 
   grafana_url = format("grafana.%s", local.domain)
 }
+
+output "i_am_ready" {
+  value       = module.prometheus_operator.i_am_ready
+  description = "Helm charts such as Kong create service monitor resource thus CRD should be created firstly"
+}

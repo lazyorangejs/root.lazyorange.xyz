@@ -7,3 +7,16 @@ prometheusOperator:
 
   tlsProxy:
     enabled: false
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+prometheus:
+ resources:
+    requests:
+      memory: 400Mi

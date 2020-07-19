@@ -6,7 +6,10 @@ module "ingress_stack" {
   do_token            = var.do_token
   cf_token            = var.cf_token
   default_issuer_name = module.cluster_settings.settings.cert_manager.defaultIssuerName
-  settings            = module.cluster_settings.settings.ingress
+  // wait until promether-operator CRDs are created
+  settings = merge(module.cluster_settings.settings.ingress, {
+    monitoring_stack_is_ready = module.monitoring_stack.i_am_ready
+  })
 }
 
 module "logging_stack" {

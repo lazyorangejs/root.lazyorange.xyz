@@ -65,6 +65,12 @@ resource "helm_release" "kong" {
     value = "false"
   }
 
+  set {
+    # https://github.com/Kong/charts/blob/master/charts/kong/values.yaml#L498
+    name  = "serviceMonitor.enabled"
+    value = "true"
+  }
+
   depends_on = [
     helm_release.kong_crd
   ]

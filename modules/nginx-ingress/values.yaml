@@ -11,5 +11,15 @@ controller:
           values:
           - ingress-nginx
       topologyKey: "kubernetes.io/hostname"
+  
+  metrics:
+    enabled: true
+
+    serviceMonitor:
+      enabled: true
+      scrapeInterval: 10s
+      namespace: monitoring
+      additionalLabels:
+        release: prometheus-operator
 
 defaultBackend: {}

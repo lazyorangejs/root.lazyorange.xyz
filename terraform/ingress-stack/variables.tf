@@ -31,16 +31,22 @@ variable "settings" {
       letsEncryptEmail = string
     })
 
+    infra_nginx_ingress = object({
+      enabled       = bool,
+      ingress_class = string
+    })
+
     ingress_class = list(string)
 
     external_dns = object({ enabled = bool })
   })
 
   default = {
-    kong          = { enabled = true },
-    ingress_class = [""]
-    cert_manager  = { enabled = true, letsEncryptEmail = "" },
-    external_dns  = { enabled = true }
+    kong                = { enabled = true },
+    ingress_class       = []
+    cert_manager        = { enabled = true, letsEncryptEmail = "" },
+    infra_nginx_ingress = { enabled = true, ingress_class = "fake-ingress-class" }
+    external_dns        = { enabled = true }
   }
 }
 

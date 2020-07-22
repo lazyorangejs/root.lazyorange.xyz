@@ -11,10 +11,16 @@ module "scaleway_k8s" {
   cluster_name       = module.cluster_settings.cluster_name
 }
 
-// resource "local_file" "scalewey_k8s_config" {
-//   sensitive_content = module.scaleway_k8s.kubernetes.kubeconfig
-//   filename          = "${path.module}/.kube/config"
-// }
+resource "local_file" "scalewey_k8s_config" {
+  sensitive_content = module.scaleway_k8s.kubernetes.kubeconfig
+  filename          = "${path.module}/.kube/config"
+
+  lifecycle {
+    ignore_changes = [
+      sensitive_content
+    ]
+  }
+}
 
 /*
 module "digitalocean_k8s" {

@@ -6,3 +6,11 @@ provider "digitalocean" {
 provider "gitlab" {
   token = var.gitlab_token
 }
+
+terraform {
+  required_version = "~> 0.12.3"
+
+  required_providers {
+    local = "1.4"
+  }
+}

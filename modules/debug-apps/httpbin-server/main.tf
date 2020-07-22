@@ -1,6 +1,6 @@
 locals {
   enabled = var.enabled ? 1 : 0
-  version = "0.6.0"
+  version = "0.8.0"
 }
 
 # https://gitlab.com/gitlab-org/charts/auto-deploy-app
@@ -18,7 +18,7 @@ resource "helm_release" "httpbin_server" {
   atomic           = true
   create_namespace = true
 
-  namespace = var.namespace
+  namespace = var.kubernetes.namespace
 
   values = [
     templatefile("${path.module}/values.yaml", {

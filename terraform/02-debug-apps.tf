@@ -32,6 +32,6 @@ module "httpbin_server" {
   enabled    = local.debug_services.enabled && local.debug_services.httpbin_server_enabled
   kubernetes = merge(local.kubernetes, { namespace = "debug-apps" })
 
-  ingress_class = "nginx"
+  ingress_class = module.cluster_settings.settings.default_infra_ingress_class
   service_url   = format("httpbin.%s", local.domain)
 }

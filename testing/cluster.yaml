@@ -6,6 +6,7 @@ cluster:
   domain:
     name: testing.lazyorange.xyz
     letsEncryptEmail: vymarkov@gmail.com
+    dns_provider: cloudflare
   cloud:
     provider: scaleway
   gitlab:

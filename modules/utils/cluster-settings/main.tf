@@ -74,6 +74,16 @@ locals {
   ingress_settings = merge(local.cluster.stacks.ingress, {
     ingress_class = [local.defaultInfraIngressClass]
 
+    external_dns = {
+      enabled       = length(var.do_token) > 0 || length(var.cf_token) > 0
+      dns_provider  = local.cluster.domain.dns_provider
+    }
+
+    infra_nginx_ingress = {
+      enabled       = local.cluster.enabled
+      ingress_class = local.defaultInfraIngressClass
+    }
+
     cert_manager = {
       enabled          = local.cluster.stacks.ingress.cert_manager.enabled
       letsEncryptEmail = local.cluster.domain.letsEncryptEmail

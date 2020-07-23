@@ -38,6 +38,7 @@ module "basic_example" {
   source = "../terraform"
 
   cf_token     = var.cf_token
+  do_token     = var.do_token
   gitlab_token = var.gitlab_token
 
   root_gitlab_group_id = module.cluster_settings.settings.gitlab.group_id

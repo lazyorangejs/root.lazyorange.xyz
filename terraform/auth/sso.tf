@@ -1,31 +1,3 @@
-module "nginx_ingress" {
-  source = "../../modules/nginx-ingress"
-
-  enabled       = var.settings.enabled
-  ingress_class = var.settings.ingress_class
-
-  kubernetes = merge(var.kubernetes, {
-    namespace = "ingress-nginx"
-  })
-
-  helm_values = yamlencode({
-    controller = {
-      antiAffinity = "hard",
-      kind         = "Deployment",
-      autoscaling = {
-        enabled = false
-      },
-      nodeSelector = {}
-    },
-
-    defaultBackend = {
-      antiAffinity = "hard",
-      kind         = "Both",
-      nodeSelector = {}
-    }
-  })
-}
-
 module "cluster_auth" {
   source  = "../../modules/auth/cluster-auth"
   enabled = false

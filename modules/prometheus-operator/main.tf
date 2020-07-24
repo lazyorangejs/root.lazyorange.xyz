@@ -21,18 +21,21 @@ resource "helm_release" "prometheus_operator_crd" {
   namespace = var.kubernetes.namespace
 
   values = [
-    templatefile("${path.module}/prometheus-operator.values.yaml", {})
+    templatefile("${path.module}/prometheus-operator.values.yaml", {
+      prometheus_url = var.prometheus_url,
+      ingress_class  = var.ingress_class
+    })
   ]
-
-  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
-  set {
-    name  = "prometheusOperator.enabled"
-    value = "true"
-  }
 
   set {
     name  = "prometheusOperator.manageCrds"
     value = "true"
+  }
+
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
+  set {
+    name  = "prometheusOperator.enabled"
+    value = "false"
   }
 
   # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
@@ -88,23 +91,28 @@ resource "helm_release" "prometheus_operator" {
   namespace = var.kubernetes.namespace
 
   values = [
-    templatefile("${path.module}/prometheus-operator.values.yaml", {}),
+    templatefile("${path.module}/prometheus-operator.values.yaml", {
+      prometheus_url = var.prometheus_url,
+      ingress_class  = var.ingress_class
+    }),
+    
     local.gitlab_enabled ? templatefile("${path.module}/graphana-auth-gitlab.values.yaml", var.idp_credentials) : "",
-    templatefile("${path.module}/values.yaml", {
-      grafana_url  = var.grafana_url,
-      ingressClass = var.ingress_class
+
+    templatefile("${path.module}/grafana-values.yaml", {
+      grafana_url   = var.grafana_url,
+      ingress_class = var.ingress_class
     })
   ]
-
-  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
-  set {
-    name  = "prometheusOperator.enabled"
-    value = "false"
-  }
 
   set {
     name  = "prometheusOperator.manageCrds"
     value = "false"
+  }
+
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
+  set {
+    name  = "prometheusOperator.enabled"
+    value = "true"
   }
 
   # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml

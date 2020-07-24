@@ -29,3 +29,9 @@ proxy:
     # Enable plaintext HTTP listen for the proxy
     # HTTP traffic should be allowed for Cert Manager to generate certs
     enabled: true
+
+serviceMonitor:
+  interval: 10s
+  namespace: monitoring
+  labels:
+    release: prometheus-operator

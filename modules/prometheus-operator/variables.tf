@@ -3,9 +3,12 @@ variable "enabled" {
   default = true
 }
 
+variable "prometheus_url" {
+  type = string
+}
+
 variable "grafana_url" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "ingress_class" {

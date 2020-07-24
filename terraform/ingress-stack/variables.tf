@@ -38,16 +38,11 @@ variable "settings" {
 
     ingress_class = list(string)
 
-    external_dns = object({ enabled = bool })
+    external_dns = object({
+      enabled      = bool,
+      dns_provider = string
+    })
   })
-
-  default = {
-    kong                = { enabled = true },
-    ingress_class       = []
-    cert_manager        = { enabled = true, letsEncryptEmail = "" },
-    infra_nginx_ingress = { enabled = true, ingress_class = "fake-ingress-class" }
-    external_dns        = { enabled = true }
-  }
 }
 
 variable "kubernetes" {

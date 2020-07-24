@@ -1,6 +1,16 @@
 # https://github.com/helm/charts/tree/master/stable/grafana#configuration
 # https://github.com/helm/charts/tree/master/stable/grafana#import-dashboards
 grafana:
+  replicas: 1
+
+  persistence:
+    enabled: true
+    # type: statefulset
+    size: 5Gi
+  
+  podDisruptionBudget:
+    minAvailable: 1
+
   defaultDashboardsEnabled: true
   #
   dashboardProviders:
@@ -62,6 +72,7 @@ grafana:
     requests:
       cpu: 100m
       memory: 128Mi
+  
   ingress:
     hosts:
     - ${grafana_url}
@@ -71,4 +82,4 @@ grafana:
       secretName: grafana-tls
     annotations:
       kubernetes.io/tls-acme: "true"
-      kubernetes.io/ingress.class: "${ingressClass}"
+      kubernetes.io/ingress.class: "${ingress_class}"

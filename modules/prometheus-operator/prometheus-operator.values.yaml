@@ -17,6 +17,18 @@ prometheusOperator:
       memory: 100Mi
 
 prometheus:
- resources:
+  ingress:
+    enabled: true
+    hosts:
+    - ${prometheus_url}
+    tls:
+    - hosts:
+      - ${prometheus_url}
+      secretName: prometheus-tls
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "${ingress_class}"
+
+  resources:
     requests:
       memory: 400Mi

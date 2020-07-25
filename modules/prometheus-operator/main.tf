@@ -66,6 +66,11 @@ resource "helm_release" "prometheus_operator_crd" {
     name  = "kubeStateMetrics.enabled"
     value = "false"
   }
+
+  set {
+    name  = "nodeExporter.enabled"
+    value = "false"
+  }
 }
 
 output "i_am_ready" {
@@ -95,7 +100,12 @@ resource "helm_release" "prometheus_operator" {
       prometheus_url = var.prometheus_url,
       ingress_class  = var.ingress_class
     }),
-    
+
+    templatefile("${path.module}/prometheus.values.yaml", {
+      prometheus_url = var.prometheus_url,
+      ingress_class  = var.ingress_class
+    }),
+
     local.gitlab_enabled ? templatefile("${path.module}/graphana-auth-gitlab.values.yaml", var.idp_credentials) : "",
 
     templatefile("${path.module}/grafana-values.yaml", {

@@ -82,7 +82,7 @@ resource "helm_release" "external_dns" {
   }
 
   set {
-    name = "policy"
+    name  = "policy"
     value = "sync"
   }
 

@@ -75,8 +75,8 @@ locals {
     ingress_class = [local.defaultInfraIngressClass]
 
     external_dns = {
-      enabled       = length(var.do_token) > 0 || length(var.cf_token) > 0
-      dns_provider  = local.cluster.domain.dns_provider
+      enabled      = length(var.do_token) > 0 || length(var.cf_token) > 0
+      dns_provider = local.cluster.domain.dns_provider
     }
 
     infra_nginx_ingress = {

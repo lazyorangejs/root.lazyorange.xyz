@@ -13,7 +13,7 @@ module "scaleway_k8s" {
 
 resource "local_file" "scalewey_k8s_config" {
   count = fileexists("${path.module}/.kube/config") ? 0 : 1
-  
+
   sensitive_content = module.scaleway_k8s.kubernetes.kubeconfig
   filename          = "${path.module}/.kube/config"
 

@@ -31,54 +31,6 @@ resource "helm_release" "prometheus_operator_crd" {
     name  = "prometheusOperator.manageCrds"
     value = "true"
   }
-
-  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
-  set {
-    name  = "prometheusOperator.enabled"
-    value = "false"
-  }
-
-  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
-  # https://github.com/helm/charts/tree/master/stable/prometheus-operator#prometheus
-  set {
-    name  = "prometheus.enabled"
-    value = "false"
-  }
-
-  # https://github.com/helm/charts/tree/master/stable/prometheus-operator#alertmanager
-  set {
-    name  = "alertmanager.enabled"
-    value = "false"
-  }
-
-  # https://github.com/helm/charts/tree/master/stable/prometheus-operator#grafana
-  set {
-    name  = "grafana.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "grafana.ingress.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "kubeStateMetrics.enabled"
-    value = "false"
-  }
-
-  set {
-    name  = "nodeExporter.enabled"
-    value = "false"
-  }
-}
-
-output "i_am_ready" {
-  value = true
-
-  depends_on = [
-    helm_release.prometheus_operator_crd
-  ]
 }
 
 resource "helm_release" "prometheus_operator" {

@@ -1,5 +1,8 @@
 # https://github.com/helm/charts/issues/19928#issuecomment-580403978
 prometheusOperator:
+  # https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml#L1067
+  enabled: false
+
   admissionWebhooks:
     enabled: false
     patch:
@@ -15,3 +18,22 @@ prometheusOperator:
     requests:
       cpu: 100m
       memory: 100Mi
+
+# https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml
+# https://github.com/helm/charts/tree/master/stable/prometheus-operator#prometheus
+prometheus:
+  enabled: false
+
+# https://github.com/helm/charts/tree/master/stable/prometheus-operator#alertmanager
+alertmanager:
+  enabled: false
+
+# https://github.com/helm/charts/tree/master/stable/prometheus-operator#grafana
+grafana:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false

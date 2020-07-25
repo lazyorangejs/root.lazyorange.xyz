@@ -4,23 +4,23 @@ A terraform configuration to create an [Scaleway Kapsule](https://www.scaleway.c
 
 ## Motivation
 
-Manage the Kubernetes cluster and its dependencies can be hard, then when you is already familiar with main features provided by Gitlab and its integration with [AWS EKS](https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#eks-cluster) and [Google Kubernetes Engine](https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#gke-cluster), [Auto DevOps feature](https://docs.gitlab.com/ee/topics/autodevops/#overview), using Gitlab UI you will want to manage its dependices such [NGinx Ingress Controller](https://github.com/helm/charts/tree/master/stable/nginx-ingress), CertManager, Gitlab Runner, etc through [GitOps](https://www.weave.works/blog/practical-guide-gitops) with tools that you love and use on daily-basis, such [Helm](https://helm.sh) and [helmfile](https://github.com/roboll/helmfile) and use custom values and settings that fit to your needs.
+Manage the Kubernetes cluster and its dependencies can be hard, then when you is already familiar with main features provided by Gitlab and its integration with [AWS EKS](https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#eks-cluster) and [Google Kubernetes Engine](https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#gke-cluster), [Auto DevOps feature](https://docs.gitlab.com/ee/topics/autodevops/#overview), using Gitlab UI you will want to manage its dependices such [NGinx Ingress Controller](https://github.com/helm/charts/tree/master/stable/nginx-ingress), CertManager, Gitlab Runner, etc through [GitOps](https://www.weave.works/blog/practical-guide-gitops) with tools that you love and use on daily-basis, such [Helm](https://helm.sh) and [Terraform](https://www.terraform.io).
 
 Think about this project as a collection of the services you would need to deploy on top of your Kubernetes cluster to enable logging, monitoring, certificate management, automatic discovery of Kubernetes resources via public DNS servers and other common infrastructure needs.
 
 Assumed that you will use the separated terraform configuration for environments (e.g. staging, production). 
-This module was designed to use within *staging* environment.
+This module was designed to use as a configuration source that can be configured for specific environment by adjusting *cluster.yaml*.
 In order to use for production environment you should clone this repo and rename to *production.your_domain*, change a few terraform variables and push changes to a remote origin.
 
 The module supports the following:
 
 - Setup developer-friendly environment to deploy Kubernetes from Gitlab CI and connect to Gitlab group
-- Configure a terraform state storage (DigitalOcean Spaces) for infrastructure resources
+- Configure a terraform state storage (**DigitalOcean Spaces**) for infrastructure resources
 - Deploy a Kubernetes in DigitalOcean by using DOKS (*optional, can be used any Kubernetes provider*)
 - Provision Kubernetes with addons: **Kong Ingress Contoller**, **Cert-Manager**, **ExternalDNS**
 - Setup a Kubernetes Node Group to deploy Elastic Stack (ElasticAPM, Elasticsearch, Filebeat) (supported only by DOKS)
-- Setup Rancher by using LetsEncrypt HTTP-01 challenge as a provisioner for certificates (for public infrastucture)
-- Setup oauth2-proxy to provide authentication for Kubernetes Ingress resources such as Grafana, Prometheus, etc by using Gitlab application
+- Setup **Rancher** by using LetsEncrypt HTTP-01 challenge as a provisioner for certificates (for public infrastucture)
+- Setup **oauth2-proxy** to provide authentication for Kubernetes Ingress resources such as **Grafana**, **Prometheus**, etc by using Gitlab application
 - Setup Kubernetes Docker Registry Secrets into CI/CD env variables for Gitlab's Auto Deploy Job
 
 ## Cold start
@@ -124,28 +124,11 @@ To make possible use [NGinx Ingress Controller](https://github.com/helm/charts/t
 
 ### Ingress stack
 
-- Kong Ingress Contoller: A Controller to satisfy requests for Ingress objects
+- Kong Ingress Contoller: A Controller to satisfy requests for Ingress objects to use for your applications
+- NGinx Ingress Contoller: A contoller to use with infrastructure services such as Prometheus, Grafana, Kibana, etc
 - CertManager: A Kubernetes add-on to automate the management and issuance of TLS certificates from various sources
-- External DNS
+- External DNS: Configure external DNS servers for Kubernetes Ingresses and Services, currently can be used with CloudFlare, DigitalOcean
 
-### Gitlab Runner
-
-In order to install Gitlab Runner from the helm chart you can add `GITLAB_RUNNER_INSTALLED` environment variable to Gitlab CI/CD variables (should be set to `true`) or add on top of your `.gitlab-ci.yml`
-
-By default Gitlab Runner will be started on [privileged mode](https://docs.gitlab.com/runner/executors/kubernetes.html#using-docker-dind) to be able use Docker in Docker feature to build Docker images with [CPU and RAM limits](/helmfile.d/gitlab/k8s-runner/gitlab-runner.yaml). 
-
-Gitlab Runner Manager will place pods in nodes with the following node affinity condition:
-
-```yaml
-affinity:
-  requiredDuringSchedulingIgnoredDuringExecution:
-    nodeSelectorTerms:
-    - matchExpressions:
-      - key: purpose
-        operator: NotIn
-        values:
-        - gitlab-runner
-```
 
 ## Contributing
 

@@ -1,7 +1,6 @@
 # root.lazyorange.xyz
 
-A terraform configuration to create an Scaleway Kapsule/Digital Ocean Kubernetes/AWS EKS cluster that can be connected 
-to your group clusters and then used across projects to use [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/#overview) feature.
+A terraform configuration to create an [Scaleway Kapsule](https://www.scaleway.com/en/kubernetes-kapsule/) / [DigitalOcean Kubernetes](https://www.digitalocean.com/products/kubernetes/) / [AWS EKS](https://aws.amazon.com/eks/) / *place your k8s cluster here* that can be connected to your group clusters and then used across projects to use [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/#overview) feature.
 
 ## Motivation
 

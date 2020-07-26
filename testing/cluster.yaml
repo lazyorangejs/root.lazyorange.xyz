@@ -14,8 +14,8 @@ cluster:
     group_id: 7773006 # https://gitlab.com/lazyorangejs/lab
   control_plane:
     rancher:
-      # don't install Rancher on Digital Ocean Kubernetes, your kubernetes cluster will crash
-      enabled: yes
+      # don't install Rancher on Digital Ocean Kubernetes, cause your kubernetes cluster may crash while Rancher's CRDs is being installed
+      enabled: no
   sso:
     oauth2_proxy: # nginx ingress controller will be created in order to use oauth2_proxy as an external auth service
       enabled: yes

@@ -1,7 +1,7 @@
 FROM bitnami/minideb:stretch
-# FROM ubuntu:20.04
 
-RUN apt-get update && apt-get install -qy wget unzip curl git procps
+RUN apt-get update && apt-get install -qy wget unzip curl git procps python-pip && \
+  pip install pre-commit
 
 COPY scripts /scripts
 

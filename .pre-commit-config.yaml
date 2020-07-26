@@ -1,0 +1,9 @@
+repos:
+- repo: git://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.31.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  hooks:
+    - id: terraform_fmt
+- repo: https://github.com/gruntwork-io/pre-commit
+  rev: v0.1.9
+  hooks:
+  - id: terraform-validate

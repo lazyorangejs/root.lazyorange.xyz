@@ -2,7 +2,7 @@
 # create and manage Nginx Ingress Controller, CertManager and other tools with custom values for Helm charts as you wish :)
 #
 variables:
-  CI_IMAGE_NAME: $CI_REGISTRY_IMAGE:terraform-v${TERRAFORM_VERSION}-helmfile-${HELMFILE_VERSION}-doctl-${DOCTL_VERSION}-kubectl-${KUBECTL_VER}-helm-${HELM_VER}
+  CI_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-terraform-v${TERRAFORM_VERSION}-helmfile-${HELMFILE_VERSION}-doctl-${DOCTL_VERSION}-kubectl-${KUBECTL_VER}-helm-${HELM_VER}
   KUBECTL_VER: v1.16.0
   HELM_VER: v3.2.1
   HELMFILE_VERSION: v0.116.0 # https://github.com/roboll/helmfile/releases
@@ -124,5 +124,5 @@ destroy with delay:
 
 # in this branch `local` directive is replaced by `remote` to make possible include this .gitlab-ci.yml itself from another repo
 include:
-- project: lazyorangejs/staging.lazyorange.xyz
+- project: lazyorangejs/infra/root.lazyorange.xyz
   file: .gitlab/ci/templates/Jobs/Build-Docker-Image.gitlab-ci.yml

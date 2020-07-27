@@ -17,8 +17,7 @@ docker-build-master:
   - docker push "$CI_IMAGE_NAME"
   except:
   - schedules
+  - tags 
   only:
-    refs:
-    - master
     changes:
     - Dockerfile

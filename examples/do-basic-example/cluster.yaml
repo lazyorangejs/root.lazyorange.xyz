@@ -4,6 +4,7 @@ cluster:
   domain:
     name: do-basic-example.lazyorange.xyz
     letsEncryptEmail: vymarkov@gmail.com
+    dns_provider: digitalocean
   cloud:
     provider: digitalocean
   gitlab: # within this example will be created the dedicated gitlab group with random name 
@@ -12,6 +13,9 @@ cluster:
   sso:
     oauth2_proxy:
       enabled: yes
+  infra:
+    nginx:
+      class: "nginx-infra"
   stacks:
     ingress:
       enabled: yes

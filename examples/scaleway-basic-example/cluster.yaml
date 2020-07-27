@@ -1,11 +1,15 @@
 cluster:
-  env: sandbox
   enabled: yes
+  env: sandbox
   domain:
     name: scaleway-basic-example.lab.lazyorange.xyz
+    dns_provider: cloudflare
     letsEncryptEmail: vymarkov@gmail.com
   cloud:
     provider: scaleway
+  infra:
+    nginx:
+      class: nginx-infra
   gitlab: # within this example will be created the dedicated gitlab group with random name 
     infra_project_id: "fake_id"
     group_id: "fake_id"

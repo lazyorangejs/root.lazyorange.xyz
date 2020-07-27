@@ -2,6 +2,8 @@
 # Ingress Stack
 ###############
 cluster:
+  domain:
+    dns_provider: cloudflare
   gitlab:
     infra_project_id: ""
     group_id: ""

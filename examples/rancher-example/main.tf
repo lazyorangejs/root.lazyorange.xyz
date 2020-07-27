@@ -20,10 +20,10 @@ module "ingress_stack" {
 
   kubernetes = local.kubernetes
 
-  domain            = local.domain
-  defaultIssuerName = local.defaultIssuerName
-  do_token          = var.do_token
-  cf_token          = var.cf_token
+  domain              = local.domain
+  default_issuer_name = local.defaultIssuerName
+  do_token            = var.do_token
+  cf_token            = var.cf_token
 
   settings = {
     kong = {
@@ -36,8 +36,16 @@ module "ingress_stack" {
     }
 
     external_dns = {
-      enabled = true
+      enabled      = true
+      dns_provider = "digitalocean"
     }
+
+    infra_nginx_ingress = {
+      enabled       = true
+      ingress_class = "nginx-infra"
+    }
+
+    ingress_class = ["nginx-infra"]
   }
 }
 

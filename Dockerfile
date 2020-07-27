@@ -1,7 +1,6 @@
 FROM bitnami/minideb:stretch
 
-RUN apt-get update && apt-get install -qy wget unzip curl git procps python-pip && \
-  pip install pre-commit
+RUN apt-get update && apt-get install -qy wget unzip curl git procps
 
 COPY scripts /scripts
 
@@ -32,7 +31,7 @@ RUN /scripts/install_helmfile.sh
 # It increases image size from 393MB to 778MB
 # and as a result increases the bootstrap process of Gitlab CI job
 RUN apt-get install python python-pip -qy
-RUN pip install awscli
+RUN pip install awscli pre-commit
 
 # ==> Install doctl
 ARG doctl_ver=1.43.0

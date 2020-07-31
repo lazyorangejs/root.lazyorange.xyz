@@ -12,7 +12,7 @@ variables:
   KUBEHOME_DIR: $CI_PROJECT_DIR/.kube
   KUBECONFIG: $CI_PROJECT_DIR/.kube/config
   # Terraform variables
-  TERRAFORM_DIR: ./terraform
+  TERRAFORM_DIR: ./testing
   PLAN: plan.tfplan
   TF_VAR_kubeconfig_path: $CI_PROJECT_DIR/.kube/config
   # Set a group id to add a kubernetes cluster to its settings

@@ -1,14 +1,3 @@
-module "gitlab" {
-  source = "./gitlab"
-
-  gitlab_project_id = local.gitlab_manage_project_id
-  gitlab_token      = var.gitlab_token
-  do_token          = var.do_token
-
-  s3_aws_access_key_id     = var.s3_aws_access_key_id
-  s3_aws_secret_access_key = var.s3_aws_secret_access_key
-}
-
 module "gitlab_docker_registry" {
   source             = "../modules/auth/gitlab-docker-registry"
   enabled            = true

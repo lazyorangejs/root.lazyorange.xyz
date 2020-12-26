@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/lazyorangejs/infra/root.lazyorange.xyz)
+
 # root.lazyorange.xyz
 
 A terraform configuration to create an AWS EKS cluster that can be connected 
